@@ -1,0 +1,90 @@
+package neuronaws
+
+import (
+	"fmt"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/elb"
+	"github.com/aws/aws-sdk-go/service/elbv2"
+	//"neuron/logger"
+)
+
+type GetCountResponse struct {
+	ServerCount     int    `json:"ServerCount,omitempty"`
+	NetworkCount    int    `json:"NetworkCount,omitempty"`
+	SubnetCount     int    `json:"SubnetConnt,omitempty"`
+	LbCount         int    `json:"LbCount,omitempty"`
+	ImagesCount     int    `json:"ImagesCount,omitempty"`
+	DefaultResponse string `json:"DefaultResponse,omitempty"`
+}
+
+var (
+	regions []string
+)
+
+func GetCount() GetCountResponse {
+	regions = getRegions()
+
+	counts := count(regions)
+	for _, count_detail := range counts {
+		fmt.Println(count_detail)
+	}
+
+	return GetCountResponse{}
+}
+
+func count(regions []string) []int {
+
+	server_count := 0
+	subnet_count := 0
+	network_count := 0
+	lb1_count := 0
+	lb2_count := 0
+	image_count := 0
+	for _, region := range regions {
+		session_inputvp := EstablishConnectionInput{region, "ec2"}
+		session_inputvp.EstablishConnection()
+		session_inputlb1 := EstablishConnectionInput{region, "elb"}
+		session_inputlb1.EstablishConnection()
+		session_inputlb2 := EstablishConnectionInput{region, "elb2"}
+		session_inputlb2.EstablishConnection()
+
+		server_count_input := &ec2.DescribeInstancesInput{}
+		server_count_reslut, _ := Svc.DescribeInstances(server_count_input)
+
+		vpc_count_input := &ec2.DescribeVpcsInput{}
+		vpc_count_result, _ := Svc.DescribeVpcs(vpc_count_input)
+
+		subnet_count_input := &ec2.DescribeSubnetsInput{}
+		subnet_count_response, _ := Svc.DescribeSubnets(subnet_count_input)
+
+		lb1_count_input := &elb.DescribeLoadBalancersInput{}
+		lb1_count_result, _ := Elb.DescribeLoadBalancers(lb1_count_input)
+
+		lb2_count_input := &elbv2.DescribeLoadBalancersInput{}
+		lb2_count_result, _ := Elb2.DescribeLoadBalancers(lb2_count_input)
+
+		server_count += len(server_count_reslut.Reservations)
+		network_count += len(vpc_count_result.Vpcs)
+		subnet_count += len(subnet_count_response.Subnets)
+		lb1_count += len(lb1_count_result.LoadBalancerDescriptions)
+		lb2_count += len(lb2_count_result.LoadBalancers)
+	}
+	go func(image_count int) {
+		image_count_input := &ec2.DescribeImagesInput{Filters: []*ec2.Filter{&ec2.Filter{Name: aws.String("is-public"), Values: aws.StringSlice([]string{"false"})}}}
+		image_count_result, _ := Svc.DescribeImages(image_count_input)
+		image_count = len(image_count_result.Images)
+	}(image_count)
+	return []int{server_count, network_count, subnet_count, (lb1_count + lb2_count), image_count}
+}
+
+func getRegions() []string {
+	region_input := &ec2.DescribeRegionsInput{}
+	result, _ := Svc.DescribeRegions(region_input)
+
+	var regions []string
+	for _, region := range result.Regions {
+		regions = append(regions, *region.RegionName)
+	}
+	return regions
+}

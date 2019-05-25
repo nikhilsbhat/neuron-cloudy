@@ -1,0 +1,54 @@
+package neuronaws
+
+import (
+  "fmt"
+  "github.com/aws/aws-sdk-go/aws"
+  "github.com/aws/aws-sdk-go/service/ec2"
+)
+
+type ConsulResponce struct {
+  Bind_addr               string
+  Ui                      bool
+  Client                  string
+  Advertise_addr          string
+  Retry_join              []string
+  Server                  bool
+}
+
+func DecideConsulType(subnet,region string) ConsulResponce{
+
+  server_input := &ec2.DescribeInstancesInput {
+    Filters: []*ec2.Filter{
+      &ec2.Filter{
+        Name: aws.String("subnet-id"),
+        Values: aws.StringSlice([]string{subnet}),
+        },
+      },
+  }
+  server_response, _ := Svc.DescribeInstances(server_input)
+  var ipaddress []string
+  for _, reservation := range server_response.Reservations {
+    for _, instance := range reservation.Instances {
+      ipaddress = append(ipaddress,*instance.PrivateIpAddress)
+    }
+  }
+
+  var responceconsul ConsulResponce
+  var ip string
+  if len(ipaddress) == 0 {
+    responceconsulptr := &responceconsul
+    *responceconsulptr = ConsulResponce{"127.0.0.1",true,"0.0.0.0","127.0.0.1",[]string{"127.0.0.1"},true}
+  } else if len(ipaddress) <= 5 {
+    ipprt := &ip
+    *ipprt = ipaddress[len(ipaddress)-1]
+    fmt.Println(ip)
+    responceconsulptr := &responceconsul
+    *responceconsulptr = ConsulResponce{"127.0.0.1",true,"0.0.0.0","127.0.0.1",[]string{ip},true}
+  } else {
+    ipprt := &ip
+    *ipprt = ipaddress[len(ipaddress)-1]
+    responceconsulptr := &responceconsul
+    *responceconsulptr = ConsulResponce{"127.0.0.1",true,"0.0.0.0","127.0.0.1",[]string{ip},false}
+  }
+  return responceconsul
+}
