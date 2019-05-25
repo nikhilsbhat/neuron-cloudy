@@ -5,7 +5,7 @@ import (
 )
 
 // GetImageInput can hold all the required details for fecthing the details of image
-type capturedype GetImageInput struct {
+type GetImageInput struct {
 	Kind     string   `json:"Kind"`
 	ImageIds []string `json:"ImageIds"`
 	GetRaw   bool     `json:"GetRaw"`
@@ -52,7 +52,7 @@ func (i *GetImageInput) GetImage(con aws.EstablishConnectionInput) ([]ImageRespo
 	return imageResponse, nil
 }
 
-// This function is tuned to get the details of all images present under this account in the entered region.
+// GetAllImage will get the details of all images present under this account in the entered region.
 func (i *GetImageInput) GetAllImage(con aws.EstablishConnectionInput) ([]ImageResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
