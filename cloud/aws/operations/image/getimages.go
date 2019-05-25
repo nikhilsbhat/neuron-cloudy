@@ -5,7 +5,7 @@ import (
 )
 
 // GetImageInput can hold all the required details for fecthing the details of image
-ts capturedype GetImageInput struct {
+type capturedype GetImageInput struct {
 	Kind     string   `json:"Kind"`
 	ImageIds []string `json:"ImageIds"`
 	GetRaw   bool     `json:"GetRaw"`
