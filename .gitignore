@@ -1,0 +1,24 @@
+
+# dropping the credentials [ssh-key and gcp-credentials]
+*.pem
+
+# file which gets populated in mac locally which has nothing to do with my code
+.DS_Store
+
+# file which gets populated beacuse of IDE which has nothing to do with my code
+.vscode
+
+# dropping local state files of terraform
+*.tfstate
+*.tfstate.*
+
+# dropping downloaded modules and plugins of terraform
+*.terraform
+
+# dropping the plan which will be created locally by terraform plan
+*.tfplan
+
+# dropping the directory which acts as local backend
+backend
+
+#.gitlab-ci.yml

@@ -1,0 +1,68 @@
+# github.com/Azure/azure-sdk-for-go v29.0.0+incompatible
+github.com/Azure/azure-sdk-for-go/services/compute/mgmt/2018-04-01/compute
+github.com/Azure/azure-sdk-for-go/services/network/mgmt/2017-09-01/network
+github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2018-05-01/resources
+github.com/Azure/azure-sdk-for-go/services/preview/subscription/mgmt/2018-03-01-preview/subscription
+github.com/Azure/azure-sdk-for-go/version
+# github.com/Azure/go-autorest v11.2.8+incompatible
+github.com/Azure/go-autorest/autorest/validation
+# github.com/aws/aws-sdk-go v1.19.38
+github.com/aws/aws-sdk-go/aws
+github.com/aws/aws-sdk-go/aws/awserr
+github.com/aws/aws-sdk-go/aws/session
+github.com/aws/aws-sdk-go/service/ec2
+github.com/aws/aws-sdk-go/service/elb
+github.com/aws/aws-sdk-go/service/elbv2
+github.com/aws/aws-sdk-go/aws/credentials
+github.com/aws/aws-sdk-go/aws/endpoints
+github.com/aws/aws-sdk-go/internal/sdkio
+github.com/aws/aws-sdk-go/aws/client
+github.com/aws/aws-sdk-go/aws/corehandlers
+github.com/aws/aws-sdk-go/aws/credentials/processcreds
+github.com/aws/aws-sdk-go/aws/credentials/stscreds
+github.com/aws/aws-sdk-go/aws/csm
+github.com/aws/aws-sdk-go/aws/defaults
+github.com/aws/aws-sdk-go/aws/request
+github.com/aws/aws-sdk-go/internal/ini
+github.com/aws/aws-sdk-go/internal/shareddefaults
+github.com/aws/aws-sdk-go/aws/awsutil
+github.com/aws/aws-sdk-go/aws/client/metadata
+github.com/aws/aws-sdk-go/aws/signer/v4
+github.com/aws/aws-sdk-go/internal/sdkrand
+github.com/aws/aws-sdk-go/private/protocol
+github.com/aws/aws-sdk-go/private/protocol/ec2query
+github.com/aws/aws-sdk-go/private/protocol/query
+github.com/aws/aws-sdk-go/service/sts
+github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds
+github.com/aws/aws-sdk-go/aws/credentials/endpointcreds
+github.com/aws/aws-sdk-go/aws/ec2metadata
+github.com/aws/aws-sdk-go/private/protocol/rest
+github.com/aws/aws-sdk-go/private/protocol/query/queryutil
+github.com/aws/aws-sdk-go/private/protocol/xml/xmlutil
+github.com/aws/aws-sdk-go/internal/sdkuri
+github.com/aws/aws-sdk-go/private/protocol/json/jsonutil
+# github.com/fatih/color v1.7.0
+github.com/fatih/color
+# github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
+github.com/globalsign/mgo
+github.com/globalsign/mgo/bson
+github.com/globalsign/mgo/internal/sasl
+github.com/globalsign/mgo/internal/scram
+github.com/globalsign/mgo/internal/json
+# github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
+github.com/jmespath/go-jmespath
+# github.com/mattn/go-colorable v0.0.9
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.4
+github.com/mattn/go-isatty
+# github.com/nikhilsbhat/neuron v0.0.0-20190222114422-1deb5e45819a
+github.com/nikhilsbhat/neuron/database
+github.com/nikhilsbhat/neuron/database/common
+github.com/nikhilsbhat/neuron/cloudoperations
+github.com/nikhilsbhat/neuron/database/fs
+github.com/nikhilsbhat/neuron/database/mongodb
+github.com/nikhilsbhat/neuron/error
+github.com/nikhilsbhat/neuron/logger
+github.com/nikhilsbhat/neuron/cli/ui
+# golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a
+golang.org/x/sys/unix
