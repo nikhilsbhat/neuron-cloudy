@@ -28,7 +28,7 @@ type GetLoadbalancerInput struct {
 	GetRaw bool `json:"getraw"`
 }
 
-// GetAllLoadbalancer will help in fetching information about all loadbalancers this include both applicaiton and classic.
+// GetAllLoadbalancer will help in fetching information about all loadbalancers this include both application and classic.
 func (lb *GetLoadbalancerInput) GetAllLoadbalancer(con aws.EstablishConnectionInput) ([]LoadBalanceResponse, error) {
 
 	lbChn := make(chan interface{}, 2)
@@ -109,7 +109,7 @@ func (lb *GetLoadbalancerInput) GetAllClassicLb(con aws.EstablishConnectionInput
 	return lbList, nil
 }
 
-// GetAllApplicationLb will help in fetching the information about all applicaiton loadbalancer present in the region selected.
+// GetAllApplicationLb will help in fetching the information about all application loadbalancer present in the region selected.
 func (lb *GetLoadbalancerInput) GetAllApplicationLb(con aws.EstablishConnectionInput) ([]LoadBalanceResponse, error) {
 
 	//get the relative sessions before proceeding further

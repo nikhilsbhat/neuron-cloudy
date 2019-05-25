@@ -23,7 +23,7 @@ type GetRegionsResponse struct {
 	DefaultResponse string `json:"DefaultResponse,omitempty"`
 }
 
-// GetRegions will fetch the information about the regions specified, else the details of entire region accross the region.
+// GetRegions will fetch the information about the regions specified, else the details of entire region across the region.
 func (reg *GetRegionInput) GetRegions() (GetRegionsResponse, error) {
 
 	if status := support.DoesCloudSupports(strings.ToLower(reg.Cloud.Name)); status != true {

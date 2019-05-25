@@ -26,7 +26,7 @@ type ServerCreateInput struct {
 	// Flavor defines the hardware configurations of the vm that has to be created [ex: t2.micro(aws),n1-standard-2(gcp) etc.]
 	Flavor string `json:"flavor"`
 
-	// The raw codes that has to be executed immediatly after server boots up goes here.
+	// The raw codes that has to be executed immediately after server boots up goes here.
 	UserData string `json:"userdata"`
 
 	// This defines whether a public IP has to be assigned to VM or not

@@ -12,7 +12,7 @@ import (
 )
 
 // DeleteImageResponse contains the details of the images deleted by DeleteImage.
-// This also can contain the responces from various cloud, but will deliver what was passed to it.
+// This also can contain the response from various cloud, but will deliver what was passed to it.
 type DeleteImageResponse struct {
 	// Contains filtered/unfiltered response of AWS.
 	AwsResponse []image.ImageResponse `json:"AwsResponse,omitempty"`

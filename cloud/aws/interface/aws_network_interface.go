@@ -784,7 +784,7 @@ func (sess *EstablishedSession) WaitUntilRoutTableDeleted(d *DescribeNetworkInpu
 	return false, err.InvalidSession()
 }
 
-// WaitUntilIgwDeleted makes the method called this to wait until internetgateway deletion is successfull.
+// WaitUntilIgwDeleted makes the method called this to wait until internetgateway deletion is successful.
 func (sess *EstablishedSession) WaitUntilIgwDeleted(d *DescribeNetworkInput) (bool, error) {
 
 	if sess.Ec2 != nil {

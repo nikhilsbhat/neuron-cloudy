@@ -162,7 +162,7 @@ func (sess *EstablishedSession) CreateTargetGroups(lb *LoadBalanceCreateInput) (
 	return nil, err.InvalidSession()
 }
 
-// CreateApplicationListners helps in creating listners for the loadbalancers.
+// CreateApplicationListners helps in creating listeners for the loadbalancers.
 func (sess *EstablishedSession) CreateApplicationListners(lb *LoadBalanceCreateInput) (*elbv2.CreateListenerOutput, error) {
 
 	if sess.Elb2 != nil {
@@ -340,7 +340,7 @@ func (sess *EstablishedSession) DescribeAllTargetgroups(lb *DescribeLoadbalancer
 	return nil, err.InvalidSession()
 }
 
-// DescribeListners helps in describing the selected listners.
+// DescribeListners helps in describing the selected listeners.
 func (sess *EstablishedSession) DescribeListners(lb *DescribeLoadbalancersInput) (*elbv2.DescribeListenersOutput, error) {
 
 	if sess.Elb2 != nil {
@@ -373,7 +373,7 @@ func (sess *EstablishedSession) DescribeListners(lb *DescribeLoadbalancersInput)
 
 }
 
-// DescribeAllListners helps in describing all the listners in the selscted region in aws.
+// DescribeAllListners helps in describing all the listeners in the selscted region in aws.
 func (sess *EstablishedSession) DescribeAllListners(lb *DescribeLoadbalancersInput) (*elbv2.DescribeListenersOutput, error) {
 
 	if sess.Elb2 != nil {
@@ -444,7 +444,7 @@ func (sess *EstablishedSession) DeleteTargetGroup(lb *DeleteLoadbalancerInput) e
 	return err.InvalidSession()
 }
 
-// DeleteAppListeners helps in deleting the selected application listners of the loadbalancers.
+// DeleteAppListeners helps in deleting the selected application listeners of the loadbalancers.
 func (sess *EstablishedSession) DeleteAppListeners(lb *DeleteLoadbalancerInput) error {
 
 	if sess.Elb2 != nil {
@@ -464,7 +464,7 @@ func (sess *EstablishedSession) DeleteAppListeners(lb *DeleteLoadbalancerInput) 
 	return err.InvalidSession()
 }
 
-// WaitTillLbDeletionSuccessfull will make the method who called this to wait till the deletion of loadbalancer is successfull.
+// WaitTillLbDeletionSuccessfull will make the method who called this to wait till the deletion of loadbalancer is successful.
 func (sess *EstablishedSession) WaitTillLbDeletionSuccessfull(lb *DescribeLoadbalancersInput) error {
 
 	if sess.Elb2 != nil {

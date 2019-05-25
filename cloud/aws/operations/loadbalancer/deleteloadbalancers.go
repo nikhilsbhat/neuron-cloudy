@@ -31,7 +31,7 @@ type LoadBalanceDeleteResponse struct {
 	LbName         string `json:"LbName,omitempty"`
 }
 
-// DeleteLoadbalancer is actually responsible for deleting loadbalancer asper ther details passed to it.
+// DeleteLoadbalancer is actually responsible for deleting loadbalancer asper the details passed to it.
 func (d *DeleteLoadbalancerInput) DeleteLoadbalancer(con aws.EstablishConnectionInput) ([]LoadBalanceDeleteResponse, error) {
 
 	//get the relative sessions before proceeding further

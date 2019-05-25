@@ -12,7 +12,7 @@ import (
 )
 
 // GetImagesResponse contains the details of the images collected by GetImage.
-// This also can contain the responces from various cloud, but will deliver what was passed to it.
+// This also can contain the response from various cloud, but will deliver what was passed to it.
 type GetImagesResponse struct {
 	// Contains filtered/unfiltered response of AWS.
 	AwsResponse []image.ImageResponse `json:"AwsResponse,omitempty"`

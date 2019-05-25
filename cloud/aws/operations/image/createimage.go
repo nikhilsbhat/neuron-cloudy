@@ -8,6 +8,7 @@ import (
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
+	err "github.com/nikhilsbhat/neuron-cloudy/error"
 	//err "github.com/nikhilsbhat/neuron-cloudy/error"
 )
 
@@ -17,7 +18,7 @@ type ImageCreateInput struct {
 	GetRaw     bool
 }
 
-// ImageResponse contains filtered/unfiltered response recieved from aws.
+// ImageResponse contains filtered/unfiltered response received from aws.
 type ImageResponse struct {
 	Name            string                    `json:"Name,omitempty"`
 	ImageId         string                    `json:"ImageId,omitempty"`
@@ -41,7 +42,7 @@ type SnapshotDetails struct {
 	VolumeSize int64  `json:"VolumeSize,omitempty"`
 }
 
-// CreateImage will capture the image of the server/vm based on the input recieved from ImageCreateInput.
+// CreateImage will capture the image of the server/vm based on the input received from ImageCreateInput.
 func (img *ImageCreateInput) CreateImage(con aws.EstablishConnectionInput) (ImageResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()

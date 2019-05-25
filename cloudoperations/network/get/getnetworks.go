@@ -74,7 +74,7 @@ func (net *GetNetworksInput) GetNetworks() (GetNetworksResponse, error) {
 	}
 }
 
-// GetAllNetworks will fetch the details of all networks accross all regions from the cloud specified.
+// GetAllNetworks will fetch the details of all networks across all regions from the cloud specified.
 // appropriate user and his cloud profile details which was passed while calling it.
 func (net GetNetworksInput) GetAllNetworks() ([]GetNetworksResponse, error) {
 
