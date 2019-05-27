@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/service/ec2"
-	err "github.com/nikhilsbhat/neuron-cloudy/error"
+	err "github.com/nikhilsbhat/neuron-cloudy/errors"
 )
 
 // Filters holds the required values for creating filter, so that this can be applied on resource to get the appropriate result.

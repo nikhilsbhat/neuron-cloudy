@@ -226,7 +226,7 @@ func (lb *GetLoadbalancerInput) GetClassicloadbalancers(con aws.EstablishConnect
 		lbResponse = append(lbResponse, LoadBalanceResponse{GetClassicLbsRaw: lbresponse})
 	}
 
-	for _, lb := range lbresponse.LoadBalancerDescriptions {
+	for _, load := range lbresponse.LoadBalancerDescriptions {
 		response := new(LoadBalanceResponse)
 		response.Name = *load.LoadBalancerName
 		response.LbDns = *load.DNSName

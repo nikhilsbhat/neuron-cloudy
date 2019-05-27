@@ -4,8 +4,9 @@ import (
 	cmn "github.com/nikhilsbhat/neuron/cloudoperations"
 )
 
+// GetImagesInput fetches the information about the images selected and is achieved by implementing the methoda for the same.
 type GetImagesInput struct {
-	ImageIds []string `json:"imageids"`
+	ImageIds []string
 	Cloud    cmn.Cloud
 }
 
