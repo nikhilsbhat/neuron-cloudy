@@ -3,7 +3,7 @@
     <p align="center">A cloud agnistic SDK.</p>
     <p align="center">
         <a href="https://goreportcard.com/report/github.com/nikhilsbhat/neuron-cloudy"><img src="https://goreportcard.com/badge/github.com/nikhilsbhat/neuron-cloudy"></a>
-        <a href="https://github.com/nikhilsbhat/neuron-cloudy/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg"></a>
+        <a href="https://github.com/nikhilsbhat/neuron-cloudy/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-APACHE2-blue.svg"></a>
     </p>
 </p>
 
