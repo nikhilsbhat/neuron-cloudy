@@ -1,4 +1,5 @@
 <p align="center">
+   <img alt="Neuron-Cloudy" src="https://raw.githubusercontent.com/nikhilsbhat/neuron-cloudy/development/assets/img/logo.png" height="100" />
     <h3 align="center">Neuron-Cloudy</h3>
     <p align="center">A cloud agnistic SDK.</p>
     <p align="center">
@@ -7,7 +8,7 @@
     </p>
 </p>
 
-Neuron-CLoudy is a golang sdk buit to interact with all the cloud with a single function call.
+Neuron-CLoudy is a golang sdk built to interact with all the cloud with a single function call.
 This is used by [neuron](https://github.com/nikhilsbhat/neuron), which has a cli and exposes api to
 create resources accross various cloud. As of now cloudy can talk to AWS and AZURE(Very minimal resources). Soon more features will be added and extends to various clouds.
 
