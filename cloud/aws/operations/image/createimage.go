@@ -8,7 +8,7 @@ import (
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
-	err "github.com/nikhilsbhat/neuron-cloudy/error"
+	err "github.com/nikhilsbhat/neuron-cloudy/errors"
 	//err "github.com/nikhilsbhat/neuron-cloudy/error"
 )
 

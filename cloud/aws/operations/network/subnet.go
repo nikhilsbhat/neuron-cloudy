@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/service/ec2"
+	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 )
 
@@ -18,7 +19,7 @@ type SubnetReponse struct {
 }
 
 // CreateSubnet is a customized method for subnet creation, if one needs plain subnet creation then he/she has to call the GOD, interface which talks to cloud.
-func (subin *NetworkCreateInput) CreateSubnet(con neuronaws.EstablishConnectionInput) (SubnetReponse, error) {
+func (subin *NetworkCreateInput) CreateSubnet(con aws.EstablishConnectionInput) (SubnetReponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
@@ -26,7 +27,7 @@ func (subin *NetworkCreateInput) CreateSubnet(con neuronaws.EstablishConnectionI
 	}
 	// I am gathering inputs since create subnets needs it
 	sub, suberr := ec2.CreateSubnet(
-		&neuronaws.CreateNetworkInput{
+		&aws.CreateNetworkInput{
 			Cidr:  subin.SubCidr,
 			VpcId: subin.VpcId,
 			Zone:  subin.Zone,
@@ -40,8 +41,8 @@ func (subin *NetworkCreateInput) CreateSubnet(con neuronaws.EstablishConnectionI
 
 	// I will make program wait until subnet become available
 	waiterr := ec2.WaitTillSubnetAvailable(
-		&neuronaws.DescribeNetworkInput{
-			Filters: neuronaws.Filters{
+		&aws.DescribeNetworkInput{
+			Filters: aws.Filters{
 				Name:  "subnet-id",
 				Value: []string{*sub.Subnet.SubnetId},
 			},
@@ -80,7 +81,7 @@ func (subin *NetworkCreateInput) CreateSubnet(con neuronaws.EstablishConnectionI
 }
 
 // GetAllSubnets is a customized method for fetching details of all subnets for a given region, if one needs plain get subnet then he/she has to call the GOD, interface which talks to cloud.
-func (net *GetNetworksInput) GetAllSubnets(con neuronaws.EstablishConnectionInput) (NetworkResponse, error) {
+func (net *GetNetworksInput) GetAllSubnets(con aws.EstablishConnectionInput) (NetworkResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
@@ -88,7 +89,7 @@ func (net *GetNetworksInput) GetAllSubnets(con neuronaws.EstablishConnectionInpu
 	}
 
 	result, err := ec2.DescribeAllSubnet(
-		&neuronaws.DescribeNetworkInput{},
+		&aws.DescribeNetworkInput{},
 	)
 	if err != nil {
 		return NetworkResponse{}, err
@@ -107,14 +108,14 @@ func (net *GetNetworksInput) GetAllSubnets(con neuronaws.EstablishConnectionInpu
 }
 
 // GetSubnets is a customized method for fetching details of a particular subnet for a given region, if one needs plain get subnet then he/she has to call the GOD, interface which talks to cloud.
-func (net *GetNetworksInput) GetSubnets(con neuronaws.EstablishConnectionInput) (NetworkResponse, error) {
+func (net *GetNetworksInput) GetSubnets(con aws.EstablishConnectionInput) (NetworkResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
 		return NetworkResponse{}, seserr
 	}
 	result, err := ec2.DescribeSubnet(
-		&neuronaws.DescribeNetworkInput{
+		&aws.DescribeNetworkInput{
 			SubnetIds: net.SubnetIds,
 		},
 	)
@@ -140,15 +141,15 @@ func (net *GetNetworksInput) GetSubnets(con neuronaws.EstablishConnectionInput) 
 
 // GetSubnetsFromVpc is method which gets the list of available subnets from a asked network.
 // Passing multiple values in vpcids array makes no difference here as we use only first element of it, this is customized function for raw data refer interface
-func (net *GetNetworksInput) GetSubnetsFromVpc(con neuronaws.EstablishConnectionInput) (NetworkResponse, error) {
+func (net *GetNetworksInput) GetSubnetsFromVpc(con aws.EstablishConnectionInput) (NetworkResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
 		return NetworkResponse{}, seserr
 	}
 	result, err := ec2.DescribeSubnet(
-		&neuronaws.DescribeNetworkInput{
-			Filters: neuronaws.Filters{
+		&aws.DescribeNetworkInput{
+			Filters: aws.Filters{
 				Name:  "vpc-id",
 				Value: net.VpcIds,
 			},
@@ -175,7 +176,7 @@ func (net *GetNetworksInput) GetSubnetsFromVpc(con neuronaws.EstablishConnection
 }
 
 // DeleteSubnets is a customized method for deleting subnets, if one needs plain subnet deletion then he/she has to call the GOD, interface which talks to cloud.
-func (s *DeleteNetworkInput) DeleteSubnets(con neuronaws.EstablishConnectionInput) error {
+func (s *DeleteNetworkInput) DeleteSubnets(con aws.EstablishConnectionInput) error {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
@@ -184,7 +185,7 @@ func (s *DeleteNetworkInput) DeleteSubnets(con neuronaws.EstablishConnectionInpu
 
 	for _, subnet := range s.SubnetIds {
 		err := ec2.DeleteSubnet(
-			&neuronaws.DescribeNetworkInput{
+			&aws.DescribeNetworkInput{
 				SubnetIds: []string{subnet},
 			},
 		)
@@ -194,7 +195,7 @@ func (s *DeleteNetworkInput) DeleteSubnets(con neuronaws.EstablishConnectionInpu
 
 		//Waiting till subnets deletion is successfully completed
 		subwait, subwaiterr := ec2.WaitUntilSubnetDeleted(
-			&neuronaws.DescribeNetworkInput{
+			&aws.DescribeNetworkInput{
 				SubnetIds: []string{subnet},
 			},
 		)
@@ -209,14 +210,14 @@ func (s *DeleteNetworkInput) DeleteSubnets(con neuronaws.EstablishConnectionInpu
 }
 
 // FindSubnet is a customized method which sends back the response to the caller about the existence of subnet asked for.
-func (net *GetNetworksInput) FindSubnet(con neuronaws.EstablishConnectionInput) (bool, error) {
+func (net *GetNetworksInput) FindSubnet(con aws.EstablishConnectionInput) (bool, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
 		return false, seserr
 	}
 	result, err := ec2.DescribeSubnet(
-		&neuronaws.DescribeNetworkInput{
+		&aws.DescribeNetworkInput{
 			SubnetIds: net.SubnetIds,
 		},
 	)
@@ -231,14 +232,14 @@ func (net *GetNetworksInput) FindSubnet(con neuronaws.EstablishConnectionInput) 
 
 // GetVpcFromSubnet is a customized method which helps in fetching VPC from subnet asked for.
 // Passing multi valued array make no difference as this is customized
-func (net *GetNetworksInput) GetVpcFromSubnet(con neuronaws.EstablishConnectionInput) (SubnetReponse, error) {
+func (net *GetNetworksInput) GetVpcFromSubnet(con aws.EstablishConnectionInput) (SubnetReponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
 		return SubnetReponse{}, seserr
 	}
 	result, err := ec2.DescribeSubnet(
-		&neuronaws.DescribeNetworkInput{
+		&aws.DescribeNetworkInput{
 			SubnetIds: net.SubnetIds,
 		},
 	)

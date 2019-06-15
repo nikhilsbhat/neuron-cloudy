@@ -2,7 +2,7 @@ package awsimage
 
 import (
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	err "github.com/nikhilsbhat/neuron-cloudy/error"
+	err "github.com/nikhilsbhat/neuron-cloudy/errors"
 )
 
 // DeleteImageInput holds the required value terminate image and implements DeleteImage for the same.

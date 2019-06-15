@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/aws/aws-sdk-go/service/ec2"
+	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 )
 
@@ -24,7 +25,7 @@ type VpcResponse struct {
 }
 
 // CreateVpc is a customized method for vpc creation, if one needs plain vpc creation then he/she has to call the GOD, interface which talks to cloud.
-func (vpc *NetworkCreateInput) CreateVpc(con neuronaws.EstablishConnectionInput) (VpcResponse, error) {
+func (vpc *NetworkCreateInput) CreateVpc(con aws.EstablishConnectionInput) (VpcResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
@@ -32,7 +33,7 @@ func (vpc *NetworkCreateInput) CreateVpc(con neuronaws.EstablishConnectionInput)
 	}
 	// I am gathering inputs since create vpc needs it
 	vpcResult, vpcErr := ec2.CreateVpc(
-		&neuronaws.CreateNetworkInput{
+		&aws.CreateNetworkInput{
 			Cidr:    vpc.VpcCidr,
 			Tenancy: "default",
 		})
@@ -44,8 +45,8 @@ func (vpc *NetworkCreateInput) CreateVpc(con neuronaws.EstablishConnectionInput)
 
 	// I will program wait until vpc become available
 	waitErr := ec2.WaitTillVpcAvailable(
-		&neuronaws.DescribeNetworkInput{
-			Filters: neuronaws.Filters{
+		&aws.DescribeNetworkInput{
+			Filters: aws.Filters{
 				Name: "vpc-id", Value: []string{*vpcResult.Vpc.VpcId},
 			},
 		},
@@ -105,7 +106,7 @@ func (vpc *NetworkCreateInput) CreateVpc(con neuronaws.EstablishConnectionInput)
 }
 
 // DeleteVpc is a customized method for vpc deletion, if one needs plain vpc deletion then he/she has to call the GOD, interface which talks to cloud.
-func (vpc *DeleteNetworkInput) DeleteVpc(con neuronaws.EstablishConnectionInput) error {
+func (vpc *DeleteNetworkInput) DeleteVpc(con aws.EstablishConnectionInput) error {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
@@ -113,7 +114,7 @@ func (vpc *DeleteNetworkInput) DeleteVpc(con neuronaws.EstablishConnectionInput)
 	}
 
 	err := ec2.DeleteVpc(
-		&neuronaws.DescribeNetworkInput{
+		&aws.DescribeNetworkInput{
 			VpcIds: vpc.VpcIds,
 		},
 	)
@@ -124,14 +125,14 @@ func (vpc *DeleteNetworkInput) DeleteVpc(con neuronaws.EstablishConnectionInput)
 }
 
 // GetVpcs is a customized method for fetching details of all vpc for a given region, if one needs plain get subnet then he/she has to call the GOD, interface which talks to cloud.
-func (v *GetNetworksInput) GetVpcs(con neuronaws.EstablishConnectionInput) (NetworkResponse, error) {
+func (v *GetNetworksInput) GetVpcs(con aws.EstablishConnectionInput) (NetworkResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
 		return NetworkResponse{}, seserr
 	}
 	response, err := ec2.DescribeAllVpc(
-		&neuronaws.DescribeNetworkInput{
+		&aws.DescribeNetworkInput{
 			VpcIds: v.VpcIds,
 		},
 	)
@@ -151,14 +152,14 @@ func (v *GetNetworksInput) GetVpcs(con neuronaws.EstablishConnectionInput) (Netw
 }
 
 // FindVpcs is a customized method which sends back the response to the caller about the existence of vpc asked for.
-func (v *GetNetworksInput) FindVpcs(con neuronaws.EstablishConnectionInput) (bool, error) {
+func (v *GetNetworksInput) FindVpcs(con aws.EstablishConnectionInput) (bool, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
 		return false, seserr
 	}
 	response, err := ec2.DescribeVpc(
-		&neuronaws.DescribeNetworkInput{
+		&aws.DescribeNetworkInput{
 			VpcIds: v.VpcIds,
 		},
 	)
