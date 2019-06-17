@@ -11,7 +11,7 @@ import (
 	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
-	db "github.com/nikhilsbhat/neuron-cloudy/database"
+	db "github.com/nikhilsbhat/neuron/database"
 )
 
 // GetServerResponse will return the filtered/unfiltered responses of variuos clouds.
