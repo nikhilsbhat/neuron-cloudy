@@ -1,7 +1,7 @@
 package imagesget
 
 import (
-	cmn "github.com/nikhilsbhat/neuron/cloudoperations"
+	cmn "github.com/nikhilsbhat/neuron-cloudy/cloudoperations"
 )
 
 // GetImagesInput fetches the information about the images selected and is achieved by implementing the methoda for the same.
