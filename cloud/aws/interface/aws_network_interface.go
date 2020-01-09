@@ -19,32 +19,49 @@ type Filters struct {
 
 // CreateNetworkInput implements the methods for creating the network. This also holds the values for the same.
 type CreateNetworkInput struct {
-	Cidr            string
-	Tenancy         string
-	VpcId           string
-	SubId           string
-	IgwId           string
-	Zone            string
-	Name            string
+	// CIDR block of the network that has to be created.
+	Cidr    string
+	Tenancy string
+	// VpcId is the ID of the VPC/network created.
+	VpcId string
+	// SubId is the ID of the subnetwork which is present in the network created.
+	SubId string
+	// IgwId is the ID of internet gateway  created in a particular network.
+	IgwId string
+	// Zone of the particular resource created or to be created.
+	Zone string
+	// Name the resource that would be created.
+	Name string
+	// DestinationCidr is the CIDR used while writing routes to routetable.
 	DestinationCidr string
-	RouteTableId    string
+	// RouteTableId is the ID of the routetable created or to be created.
+	RouteTableId string
 }
 
 // IngressEgressInput holds the required values for creating ingress/egress rule for the specified security group and implements the methods for the same.
 type IngressEgressInput struct {
-	Port  int64
+	// Port number that has to opened as part of both ingress/egress rule.
+	Port int64
+	// SecId refers to ID of security group to which the rule has to be applied.
 	SecId string
 }
 
 // DescribeNetworkInput holds all the required values for fetching the information about the selected network and its components.
 // This is achieved by describing the same.
 type DescribeNetworkInput struct {
-	SecIds         []string
-	IgwIds         []string
-	VpcIds         []string
-	SubnetIds      []string
-	RouteTableIds  []string
-	Filters        Filters
+	// SecIds are the security security id's created in a particular network.
+	SecIds []string
+	// IgwIds are the internet gateway id's created in a particular network.
+	IgwIds []string
+	// VpcIds are the id's of your virtual private cloud/network
+	VpcIds []string
+	// SubnetIds are ther id's of the subnets created within the network.
+	SubnetIds []string
+	// RouteTableIds are the id's of the routetable that are created as part of network creation.
+	RouteTableIds []string
+	// Filters can be applied over the resource to get more precise data about it.
+	Filters Filters
+	// AssociationsId are the id's used to identify the RouteTable are are used while detaching RouteTable from the subnetwork.
 	AssociationsId string
 }
 
@@ -233,7 +250,7 @@ func (sess *EstablishedSession) DettachRouteTable(r *DescribeNetworkInput) error
 	return err.InvalidSession()
 }
 
-// CreateEgressRule creats the egress rule with the specified configuration.
+// CreateEgressRule creates the egress rule with the specified configuration.
 func (sess *EstablishedSession) CreateEgressRule(i *IngressEgressInput) error {
 
 	if sess.Ec2 != nil {

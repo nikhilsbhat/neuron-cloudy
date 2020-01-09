@@ -6,7 +6,7 @@ import (
 
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
+	ssess "github.com/nikhilsbhat/neuron-cloudy/cloud/session"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -45,8 +45,8 @@ func (net *NetworkUpdateInput) UpdateNetwork() (UpdateNetworkResponse, error) {
 			return UpdateNetworkResponse{}, err
 		}
 		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: net.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		sessionInput := ssess.CreateAwsSessionInput{Region: net.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
+		sess := sessionInput.CreateSession()
 
 		//authorizing to request further
 		authinpt := auth.EstablishConnectionInput{Region: net.Cloud.Region, Resource: "ec2", Session: sess}

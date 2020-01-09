@@ -6,9 +6,9 @@ import (
 
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
+	"github.com/aws/aws-sdk-go/aws/session"
 )
 
 // DeleteServerResponse will return the filtered/unfiltered responses of variuos clouds.
@@ -34,18 +34,8 @@ func (serv *DeleteServersInput) DeleteServer() (DeleteServerResponse, error) {
 	switch strings.ToLower(serv.Cloud.Name) {
 	case "aws":
 
-		creds, crederr := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: serv.Cloud.Profile,
-				Cloud:   serv.Cloud.Name,
-			},
-		)
-		if crederr != nil {
-			return DeleteServerResponse{}, crederr
-		}
 		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: serv.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		sess := (serv.Cloud.Client).(*session.Session)
 
 		//authorize
 		authInpt := auth.EstablishConnectionInput{Region: serv.Cloud.Region, Resource: "ec2", Session: sess}

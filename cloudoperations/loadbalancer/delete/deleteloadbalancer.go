@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	loadbalance "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/loadbalancer"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -25,33 +25,23 @@ type LoadBalancerDeleteResponse struct {
 
 // DeleteLoadBalancer will help in deleting the loadbalancer created by CreateLoadBalancer
 // Appropriate user and his cloud profile details has to be passed while calling it.
-func (d *LbDeleteInput) DeleteLoadBalancer() (LoadBalancerDeleteResponse, error) {
+func (lb *LbDeleteInput) DeleteLoadBalancer() (LoadBalancerDeleteResponse, error) {
 
-	if status := support.DoesCloudSupports(strings.ToLower(d.Cloud.Name)); status != true {
+	if status := support.DoesCloudSupports(strings.ToLower(lb.Cloud.Name)); status != true {
 		return LoadBalancerDeleteResponse{}, fmt.Errorf(common.DefaultCloudResponse + "GetNetworks")
 	}
 
-	switch strings.ToLower(d.Cloud.Name) {
+	switch strings.ToLower(lb.Cloud.Name) {
 	case "aws":
 
-		creds, err := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: d.Cloud.Profile,
-				Cloud:   d.Cloud.Name,
-			},
-		)
-		if err != nil {
-			return LoadBalancerDeleteResponse{}, err
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: d.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// Gets the established session so that it can carry out the process in cloud
+		sess := (lb.Cloud.Client).(*session.Session)
 
 		//authorizing to request further
 		authinpt := new(auth.EstablishConnectionInput)
-		authinpt.Region = d.Cloud.Region
+		authinpt.Region = lb.Cloud.Region
 		authinpt.Session = sess
-		switch strings.ToLower(d.Type) {
+		switch strings.ToLower(lb.Type) {
 		case "classic":
 			authinpt.Resource = "elb"
 		case "application":
@@ -59,10 +49,10 @@ func (d *LbDeleteInput) DeleteLoadBalancer() (LoadBalancerDeleteResponse, error)
 		}
 
 		lbin := new(loadbalance.DeleteLoadbalancerInput)
-		lbin.LbNames = d.LbNames
-		lbin.LbArns = d.LbArns
-		lbin.Type = d.Type
-		lbin.GetRaw = d.Cloud.GetRaw
+		lbin.LbNames = lb.LbNames
+		lbin.LbArns = lb.LbArns
+		lbin.Type = lb.Type
+		lbin.GetRaw = lb.Cloud.GetRaw
 		response, lberr := lbin.DeleteLoadbalancer(*authinpt)
 		if lberr != nil {
 			return LoadBalancerDeleteResponse{}, lberr

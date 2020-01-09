@@ -14,6 +14,10 @@ const (
 	DefaultGcpResponse = "We have not reached to google cloud yet"
 	// DefaultCloudResponse holds default message.
 	DefaultCloudResponse = "I feel we are lost in performing the action, guess you have entered wrong cloud. The action was: "
+	// BetaResponse helps in constructing response for beta resources.
+	BetaResponse = "%s is in Beta and supports very minimal support."
+	// AlphaResponse helps in constructing response for Alpha resources.
+	AlphaResponse = "%s is in Alpha and supports very minimal support."
 )
 
 // GetCredentialsInput holds the information of profile and cloud that has to be fetched from database.

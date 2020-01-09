@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	network "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -36,24 +36,13 @@ func (sub GetNetworksInput) GetSubnets() (GetSubnetsResponse, error) {
 	switch strings.ToLower(sub.Cloud.Name) {
 	case "aws":
 
-		creds, err := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: sub.Cloud.Profile,
-				Cloud:   sub.Cloud.Name,
-			},
-		)
-
-		if err != nil {
-			return GetSubnetsResponse{}, err
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: sub.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// Gets the established session so that it can carry out the process in cloud
+		sess := (sub.Cloud.Client).(*session.Session)
 
 		//authorizing to request further
 		authInpt := auth.EstablishConnectionInput{Region: sub.Cloud.Region, Resource: "ec2", Session: sess}
 
-		// I will call getsubnets and get the things done
+		// calls getsubnets and get the things done
 		networkin := new(network.GetNetworksInput)
 		networkin.GetRaw = sub.Cloud.GetRaw
 		if sub.SubnetIds != nil {
