@@ -37,7 +37,8 @@ type CreateGcpSessionInput struct {
 	CredPath string
 	// Zone of the resource.
 	Zone string
-	// RawJSON can take the raw input of the cloud credential passed (this contradicts CredPath, both cannot be used simultaneously).
+	// RawJSON could be alternative to CredPath, if one prefers to inject credential directly this is the way
+	// this contradicts CredPath, both cannot be used simultaneously.
 	RawJSON []byte
 	// Client is the actual client of the Google Cloud.
 	// Client *http.Client
@@ -49,7 +50,7 @@ type Session interface {
 }
 
 // CreateSession returns the valid gcp client which has permissions to perform operation in GCP.
-func (auth *CreateGcpSessionInput) CreateSession() (*http.Client, error) {
+func (auth *CreateGcpSessionInput) CreateSession() (interface{}, error) {
 	if (len(auth.CredPath) == 0) && (auth.RawJSON == nil) {
 		client, err := auth.getDefalutGCPClient()
 		if err != nil {
@@ -78,7 +79,7 @@ func (auth *CreateGcpSessionInput) getDefalutGCPClient() (*http.Client, error) {
 	return c, nil
 }
 
-func (auth *CreateGcpSessionInput) getCustomGCPClient() *http.Client {
+func (auth *CreateGcpSessionInput) getCustomGCPClient() *jwt.Config {
 
 	conf := &jwt.Config{
 		Email:      auth.gcpsvcauth.ClientEmail,
@@ -87,9 +88,12 @@ func (auth *CreateGcpSessionInput) getCustomGCPClient() *http.Client {
 		TokenURL:   auth.gcpsvcauth.TokenURI,
 		Subject:    auth.gcpsvcauth.ClientEmail,
 	}
+	return conf
+}
 
-	client := conf.Client(oauth2.NoContext)
-	return client
+// GetClient returns the fully working cutom client
+func GetClient(conf *jwt.Config) *http.Client {
+	return conf.Client(oauth2.NoContext)
 }
 
 func (auth *CreateGcpSessionInput) getGCPCred() error {
