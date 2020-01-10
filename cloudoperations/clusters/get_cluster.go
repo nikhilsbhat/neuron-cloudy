@@ -29,6 +29,7 @@ func (clust *GetClusterInput) GetClusters() (ClusterResponse, error) {
 		getCluster.ClusterName = clust.ClusterName
 		getCluster.ProjectID = clust.ProjectID
 		getCluster.Regions = clust.Regions
+		getCluster.GetRaw = clust.Cloud.GetRaw
 		resp, err := getCluster.GetClusters(clust.Cloud.Client)
 		if err != nil {
 			return ClusterResponse{}, err
@@ -56,6 +57,7 @@ func (clust *GetClusterInput) GetCluster() (ClusterResponse, error) {
 		getCluster.ClusterName = clust.ClusterName
 		getCluster.ProjectID = clust.ProjectID
 		getCluster.Regions = clust.Regions
+		getCluster.GetRaw = clust.Cloud.GetRaw
 		resp, err := getCluster.GetClusters(clust.Cloud.Client)
 		if err != nil {
 			return ClusterResponse{}, err
