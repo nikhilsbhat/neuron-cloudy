@@ -10,14 +10,12 @@ import (
 
 // GetNetworksInput implements method GetNetworks, GetSubnets.
 type GetNetworksInput struct {
-	// VpcIds are Ids or names of VPC's of which the information has to be fetched.
-	VpcIds []string `json:"vpcids"`
 	// SubnetIds are IDs or names of the SUBNET's of which the informaion has to be fetched.
 	SubnetIds []string `json:"subnetids"`
 	// ProjectID refers to the ID of the project in which the selected resource exists.
 	ProjectID string
 	// NetworkID refers to the name/id of the network of which the information has to be retrived.
-	NetworkID string
+	NetworkID []string `json:"networkid"`
 	Cloud     cmn.Cloud
 }
 

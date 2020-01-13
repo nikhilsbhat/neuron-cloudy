@@ -40,8 +40,8 @@ func (sub GetNetworksInput) GetSubnets() (GetSubnetsResponse, error) {
 				return GetSubnetsResponse{}, getSubErr
 			}
 			return GetSubnetsResponse{AwsResponse: response}, nil
-		} else if sub.VpcIds != nil {
-			networkin.VpcIds = sub.VpcIds
+		} else if sub.NetworkID != nil {
+			networkin.VpcIds = sub.NetworkID
 			response, getSubErr := networkin.GetSubnetsFromVpc(authInpt)
 			if getSubErr != nil {
 				return GetSubnetsResponse{}, getSubErr

@@ -33,7 +33,7 @@ func (net *GetNetworksInput) GetNetworks() (GetNetworksResponse, error) {
 
 		// Fetching all the networks across cloud aws
 		networkin := awsnetwork.GetNetworksInput{}
-		networkin.VpcIds = net.VpcIds
+		networkin.VpcIds = net.NetworkID
 		networkin.GetRaw = net.Cloud.GetRaw
 		response, netErr := networkin.GetNetwork(authinpt)
 		if netErr != nil {
@@ -48,7 +48,7 @@ func (net *GetNetworksInput) GetNetworks() (GetNetworksResponse, error) {
 		fmt.Fprintf(os.Stdout, "%v\n", "We are in alpha for Google Cloud support, watchout for the output")
 		getCluster := new(gcp.GetNetworkInput)
 		getCluster.ProjectID = net.ProjectID
-		getCluster.NetworkID = net.NetworkID
+		getCluster.NetworkID = net.NetworkID[0]
 		resp, err := getCluster.GetNetwork(net.Cloud.Client)
 		if err != nil {
 			return GetNetworksResponse{}, err
@@ -107,7 +107,7 @@ func (net GetNetworksInput) GetAllNetworks() ([]GetNetworksResponse, error) {
 		fmt.Fprintf(os.Stdout, "%v\n", "We are in alpha for Google Cloud support, watchout for the output")
 		getCluster := new(gcp.GetNetworkInput)
 		getCluster.ProjectID = net.ProjectID
-		getCluster.NetworkID = net.NetworkID
+		getCluster.NetworkID = net.NetworkID[0]
 		resp, err := getCluster.GetNetworks(net.Cloud.Client)
 		if err != nil {
 			return nil, err
