@@ -27,6 +27,9 @@ func (c *GetClusterInput) ListClusters() ([]*container.Cluster, error) {
 	if c.Client != nil {
 		ctx := context.Background()
 		containerService, err := container.New(c.Client)
+		if err != nil {
+			return nil, err
+		}
 		resp, err := containerService.Projects.Locations.Clusters.List(c.ResourceURL).Context(ctx).Do()
 		if err != nil {
 			return nil, err
@@ -43,6 +46,9 @@ func (c *GetClusterInput) GetCluster() (*container.Cluster, error) {
 	if c.Client != nil {
 		ctx := context.Background()
 		containerService, err := container.New(c.Client)
+		if err != nil {
+			return nil, err
+		}
 		resp, err := containerService.Projects.Locations.Clusters.Get(c.ResourceURL).Context(ctx).Do()
 		if err != nil {
 			return nil, err
