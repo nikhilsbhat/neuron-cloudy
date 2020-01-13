@@ -2,7 +2,6 @@ package gcp
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	neurongcp "github.com/nikhilsbhat/neuron-cloudy/cloud/gcp/interface"
@@ -30,7 +29,7 @@ type NetworkResponse struct {
 	// AutoCreateSubnetworks defines whether to create subnets automatically in a particular network.
 	AutoCreateSubnetworks bool
 	// Duration let to know the time since the network been created (The life of the network).
-	Duration time.Duration
+	Duration string
 	// Peerings holds the configuaration details of the peered networks.
 	Peerings []*compute.NetworkPeering
 	// RoutingConfig holds the information of router attached to the network.
@@ -74,14 +73,15 @@ func (net *GetNetworkInput) GetNetworks(client interface{}) ([]NetworkResponse, 
 		netw.Peerings = network.Peerings
 		netw.RoutingConfig = network.RoutingConfig
 		netw.SelfLink = network.SelfLink
+		netw.Duration = network.CreationTimestamp
 
-		duration, err := getElapsedTime(network.CreationTimestamp)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Failed to fetch the duration for the network")
-			response = append(response, *netw)
-			return response, err
-		}
-		netw.Duration = duration
+		// duration, err := getElapsedTime(network.CreationTimestamp)
+		// if err != nil {
+		// 	fmt.Fprintf(os.Stderr, "Failed to fetch the duration for the network")
+		// 	response = append(response, *netw)
+		// 	return response, err
+		// }
+		// netw.Duration = duration
 	}
 	return response, nil
 }
@@ -131,14 +131,15 @@ func (net GetNetworkInput) GetNetwork(client interface{}) ([]NetworkResponse, er
 		netw.Peerings = network.Peerings
 		netw.RoutingConfig = network.RoutingConfig
 		netw.SelfLink = network.SelfLink
+		netw.Duration = network.CreationTimestamp
 
-		duration, err := getElapsedTime(network.CreationTimestamp)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Failed to fetch the duration for the network")
-			response = append(response, *netw)
-			return response, err
-		}
-		netw.Duration = duration
+		// duration, err := getElapsedTime(network.CreationTimestamp)
+		// if err != nil {
+		// 	fmt.Fprintf(os.Stderr, "Failed to fetch the duration for the network")
+		// 	response = append(response, *netw)
+		// 	return response, err
+		// }
+		// netw.Duration = duration
 	}
 
 	return response, nil

@@ -45,7 +45,7 @@ func (net *GetNetworksInput) GetNetworks() (GetNetworksResponse, error) {
 		return GetNetworksResponse{}, fmt.Errorf(common.DefaultAzResponse)
 	case "gcp":
 
-		fmt.Fprintf(os.Stdout, "%v\n", "We are in alpha for Google Cloud support, watchout for the output")
+		fmt.Fprintf(os.Stdout, "%v\n", "This is an alpha resource of Google Cloud so do the support, watchout for the output")
 		getCluster := new(gcp.GetNetworkInput)
 		getCluster.ProjectID = net.ProjectID
 		getCluster.NetworkID = net.NetworkID[0]
@@ -104,7 +104,7 @@ func (net GetNetworksInput) GetAllNetworks() ([]GetNetworksResponse, error) {
 		return nil, fmt.Errorf(common.DefaultAzResponse)
 	case "gcp":
 
-		fmt.Fprintf(os.Stdout, "%v\n", "We are in alpha for Google Cloud support, watchout for the output")
+		fmt.Fprintf(os.Stdout, "%v\n", "This is an alpha resource of Google Cloud so do the support, watchout for the output")
 		getCluster := new(gcp.GetNetworkInput)
 		getCluster.ProjectID = net.ProjectID
 		resp, err := getCluster.GetNetworks(net.Cloud.Client)
