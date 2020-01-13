@@ -11,18 +11,6 @@ import (
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
 
-// GetSubnetsResponse will return the filtered/unfiltered responses of variuos clouds.
-type GetSubnetsResponse struct {
-	// Contains filtered/unfiltered response of AWS.
-	AwsResponse network.NetworkResponse `json:"AwsResponse,omitempty"`
-
-	// Contains filtered/unfiltered response of Azure.
-	AzureResponse string `json:"AzureResponse,omitempty"`
-
-	// Default response if no inputs or matching the values required.
-	DefaultResponse string `json:"DefaultResponse,omitempty"`
-}
-
 // GetSubnets will fetch the details of subnets specified else it pull the data out for all subnets in that particulat region
 // and give back the response who called this.
 // Below method will take care of fetching details of

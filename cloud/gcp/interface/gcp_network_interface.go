@@ -9,7 +9,7 @@ import (
 
 // GetNetworkInput holds the required values to get the details of the requied network.
 type GetNetworkInput struct {
-	// ProjectID refers to the ID of the GCP project in which the selscted resource exists.
+	// ProjectID refers to the ID of the GCP project in which the selected resource exists.
 	ProjectID string
 	// NetworkID refers to the name/id of the network of which the information has to be retrived.
 	NetworkID string
