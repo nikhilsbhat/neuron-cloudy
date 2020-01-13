@@ -145,7 +145,7 @@ func (net GetNetworkInput) GetNetwork(client interface{}) ([]NetworkResponse, er
 }
 
 func getElapsedTime(duration string) (time.Duration, error) {
-	Timelayout := "2006-01-02T15:04:05.000Z"
+	Timelayout := "2019-01-12T09:20:21.277-08:00"
 	creationTime, err := time.Parse(Timelayout, duration)
 	if err != nil {
 		return *new(time.Duration), err
