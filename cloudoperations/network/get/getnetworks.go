@@ -107,7 +107,6 @@ func (net GetNetworksInput) GetAllNetworks() ([]GetNetworksResponse, error) {
 		fmt.Fprintf(os.Stdout, "%v\n", "We are in alpha for Google Cloud support, watchout for the output")
 		getCluster := new(gcp.GetNetworkInput)
 		getCluster.ProjectID = net.ProjectID
-		getCluster.NetworkID = net.NetworkID[0]
 		resp, err := getCluster.GetNetworks(net.Cloud.Client)
 		if err != nil {
 			return nil, err
