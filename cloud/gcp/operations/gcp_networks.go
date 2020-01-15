@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"time"
 
-	neurongcp "github.com/nikhilsbhat/neuron-cloudy/cloud/gcp/interface"
+	neuron "github.com/nikhilsbhat/neuron-cloudy/cloud/gcp/interface"
 	"google.golang.org/api/compute/v1"
 )
 
 // GetNetworkInput holds the required values to fetch the net details
 type GetNetworkInput struct {
-	neurongcp.GetNetworkInput
+	neuron.GetNetworkInput
 	// GetRaw makes sure that function returns unfiltered response if it is set.
 	GetRaw bool
 	CredMode
@@ -45,12 +45,12 @@ type NetworkResponse struct {
 func (net *GetNetworkInput) GetNetworks(client interface{}) ([]NetworkResponse, error) {
 
 	if len(net.ProjectID) == 0 {
-		return nil, fmt.Errorf("Project ID cannot be nil")
+		return nil, fmt.Errorf("Project ID cannot be empty")
 	}
 
 	// Initialization of gcp client
 	sess := getClientFromBase(client, []string{compute.CloudPlatformScope})
-	input := new(neurongcp.GetNetworkInput)
+	input := new(neuron.GetNetworkInput)
 	input.ProjectID = net.ProjectID
 	input.Client = sess
 	networks, err := input.GetNetworks()
@@ -91,7 +91,7 @@ func (net *GetNetworkInput) GetNetworks(client interface{}) ([]NetworkResponse, 
 func (net GetNetworkInput) GetNetwork(client interface{}) ([]NetworkResponse, error) {
 
 	if len(net.ProjectID) == 0 {
-		return nil, fmt.Errorf("Project ID cannot be nil")
+		return nil, fmt.Errorf("Project ID cannot be empty")
 	}
 
 	// Initialization of gcp client
@@ -106,7 +106,7 @@ func (net GetNetworkInput) GetNetwork(client interface{}) ([]NetworkResponse, er
 	}
 
 	networks := make([]*compute.Network, 0)
-	input := new(neurongcp.GetNetworkInput)
+	input := new(neuron.GetNetworkInput)
 	input.ProjectID = net.ProjectID
 	input.NetworkID = net.NetworkID
 	input.Client = sess

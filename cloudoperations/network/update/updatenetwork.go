@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
-	ssess "github.com/nikhilsbhat/neuron-cloudy/cloud/session"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -34,38 +34,25 @@ func (net *NetworkUpdateInput) UpdateNetwork() (UpdateNetworkResponse, error) {
 	switch strings.ToLower(net.Cloud.Name) {
 	case "aws":
 
-		creds, err := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: net.Cloud.Profile,
-				Cloud:   net.Cloud.Name,
-			},
-		)
-
-		if err != nil {
-			return UpdateNetworkResponse{}, err
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := ssess.CreateAwsSessionInput{Region: net.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateSession()
+		// Gets the established session so that it can carry out the process in cloud.
+		sess := (net.Cloud.Client).(*session.Session)
 
 		//authorizing to request further
 		authinpt := auth.EstablishConnectionInput{Region: net.Cloud.Region, Resource: "ec2", Session: sess}
 
 		// I will call UpdateNetwork of interface and get the things done
-		serverin := awsnetwork.UpdateNetworkInput{
-			Resource: net.Catageory.Resource,
-			Action:   net.Catageory.Action,
-			GetRaw:   net.Cloud.GetRaw,
-			Network: awsnetwork.NetworkCreateInput{
-				Name:     net.Catageory.Name,
-				VpcCidr:  net.Catageory.VpcCidr,
-				VpcId:    net.Catageory.VpcId,
-				SubCidrs: net.Catageory.SubCidrs,
-				Type:     net.Catageory.Type,
-				Ports:    net.Catageory.Ports,
-				Zone:     net.Catageory.Zone,
-			},
-		}
+		serverin := awsnetwork.UpdateNetworkInput{}
+		serverin.Resource = net.Catageory.Resource
+		serverin.Action = net.Catageory.Action
+		serverin.GetRaw = net.Cloud.GetRaw
+		serverin.Network.Name = net.Catageory.Name
+		serverin.Network.VpcCidr = net.Catageory.VpcCidr
+		serverin.Network.VpcId = net.Catageory.VpcId
+		serverin.Network.SubCidrs = net.Catageory.SubCidrs
+		serverin.Network.Type = net.Catageory.Type
+		serverin.Network.Ports = net.Catageory.Ports
+		serverin.Network.Zone = net.Catageory.Zone
+
 		response, err := serverin.UpdateNetwork(authinpt)
 		if err != nil {
 			return UpdateNetworkResponse{}, err
@@ -73,13 +60,13 @@ func (net *NetworkUpdateInput) UpdateNetwork() (UpdateNetworkResponse, error) {
 		return UpdateNetworkResponse{AwsResponse: response}, nil
 
 	case "azure":
-		return UpdateNetworkResponse{DefaultResponse: common.DefaultAzResponse}, nil
+		return UpdateNetworkResponse{}, fmt.Errorf(common.DefaultAzResponse)
 	case "gcp":
-		return UpdateNetworkResponse{DefaultResponse: common.DefaultGcpResponse}, nil
+		return UpdateNetworkResponse{}, fmt.Errorf(common.DefaultGcpResponse)
 	case "openstack":
-		return UpdateNetworkResponse{DefaultResponse: common.DefaultOpResponse}, nil
+		return UpdateNetworkResponse{}, fmt.Errorf(common.DefaultOpResponse)
 	default:
-		return UpdateNetworkResponse{DefaultResponse: common.DefaultCloudResponse + "NetworkUpdate"}, nil
+		return UpdateNetworkResponse{}, fmt.Errorf(common.DefaultCloudResponse + "NetworkUpdate")
 	}
 }
 
