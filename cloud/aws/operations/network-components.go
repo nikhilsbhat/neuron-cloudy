@@ -1,9 +1,4 @@
-// Package awsnetwork will help one in creating/deleting/updating/fetching network in aws.
-// But this is tailor made for this application if one needs
-// customized result, he/she has to write one similar to this for them by calling the (master) interface.
-// This package is capable of returining both custom response
-// and raw from cloud depending on what you pass.
-package awsnetwork
+package aws
 
 import (
 	"fmt"
@@ -12,7 +7,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/ec2"
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 )
 
 // NetworkComponentInput  will implement the methods which deals with the creation/deletion of network components under cloud/operations.
@@ -67,7 +61,10 @@ func (net *NetworkComponentInput) CreateIgw(con aws.EstablishConnectionInput) (N
 		}
 	}
 
-	igtags := common.Tag{*ig.InternetGateway.InternetGatewayId, "Name", net.Name + "_igw"}
+	igtags := new(Tag)
+	igtags.Resource = *ig.InternetGateway.InternetGatewayId
+	igtags.Name = "Name"
+	igtags.Value = net.Name + "_igw"
 	_, igtagerr := igtags.CreateTags(con)
 	if igtagerr != nil {
 		return NetworkComponentResponse{}, igtagerr
@@ -127,7 +124,10 @@ func (net *NetworkComponentInput) CreateSecurityGroup(con aws.EstablishConnectio
 		return NetworkComponentResponse{}, secerr
 	}
 
-	sctags := common.Tag{*security.GroupId, "Name", net.Name + "_sec"}
+	sctags := new(Tag)
+	sctags.Resource = *security.GroupId
+	sctags.Name = "Name"
+	sctags.Value = net.Name + "_sec"
 	_, sctagerr := sctags.CreateTags(con)
 	if sctagerr != nil {
 		return NetworkComponentResponse{}, sctagerr

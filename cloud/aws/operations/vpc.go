@@ -1,4 +1,4 @@
-package awsnetwork
+package aws
 
 import (
 	"fmt"
@@ -6,7 +6,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/ec2"
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 )
 
 // VpcResponse is a struct that will be the response type of almost all the VPC related activities under cloud/operations.
@@ -56,7 +55,10 @@ func (vpc *NetworkCreateInput) CreateVpc(con aws.EstablishConnectionInput) (VpcR
 	}
 
 	// I will pass name to create_tags to set a name to the vpc
-	vpctagin := common.Tag{*vpcResult.Vpc.VpcId, "Name", vpc.Name}
+	vpctagin := new(Tag)
+	vpctagin.Resource = *vpcResult.Vpc.VpcId
+	vpctagin.Name = "Name"
+	vpctagin.Value = vpc.Name
 	vpctag, tagErr := vpctagin.CreateTags(con)
 	if tagErr != nil {
 		return VpcResponse{}, tagErr

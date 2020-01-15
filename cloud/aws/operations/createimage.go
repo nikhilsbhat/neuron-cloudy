@@ -1,15 +1,12 @@
-package awsimage
+package aws
 
 import (
 	"strconv"
 	"time"
 
 	"github.com/aws/aws-sdk-go/service/ec2"
-	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
-	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
+	neuronaws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	err "github.com/nikhilsbhat/neuron-cloudy/errors"
-	//err "github.com/nikhilsbhat/neuron-cloudy/error"
 )
 
 // ImageCreateInput implements CreateImage for creation of image
@@ -43,7 +40,7 @@ type SnapshotDetails struct {
 }
 
 // CreateImage will capture the image of the server/vm based on the input received from ImageCreateInput.
-func (img *ImageCreateInput) CreateImage(con aws.EstablishConnectionInput) (ImageResponse, error) {
+func (img *ImageCreateInput) CreateImage(con neuronaws.EstablishConnectionInput) (ImageResponse, error) {
 
 	ec2, seserr := con.EstablishConnection()
 	if seserr != nil {
@@ -51,7 +48,8 @@ func (img *ImageCreateInput) CreateImage(con aws.EstablishConnectionInput) (Imag
 	}
 
 	// fetching instance details as I need to pass this while taking server backup
-	searchInstance := server.CommonComputeInput{InstanceIds: []string{img.InstanceId}}
+	searchInstance := new(CommonComputeInput)
+	searchInstance.InstanceIds = []string{img.InstanceId}
 	instanceResult, insterr := searchInstance.SearchInstance(con)
 	if insterr != nil {
 		return ImageResponse{}, insterr
@@ -60,7 +58,8 @@ func (img *ImageCreateInput) CreateImage(con aws.EstablishConnectionInput) (Imag
 		return ImageResponse{}, err.ServerNotFound()
 	}
 
-	getInstname := server.DescribeInstanceInput{InstanceIds: []string{img.InstanceId}}
+	getInstname := new(DescribeInstanceInput)
+	getInstname.InstanceIds = []string{img.InstanceId}
 	instanceName, instgeterr := getInstname.GetServersDetails(con)
 	if instgeterr != nil {
 		return ImageResponse{}, instgeterr
@@ -71,7 +70,7 @@ func (img *ImageCreateInput) CreateImage(con aws.EstablishConnectionInput) (Imag
 
 	// fetching names from images so that we can name the new image uniquely
 	result, deserr := ec2.DescribeAllImages(
-		&aws.DescribeComputeInput{},
+		&neuronaws.DescribeComputeInput{},
 	)
 
 	if deserr != nil {
@@ -84,14 +83,14 @@ func (img *ImageCreateInput) CreateImage(con aws.EstablishConnectionInput) (Imag
 	}
 
 	// Getting Unique number to name image uniquely
-	uqnin := common.CommonInput{SortInput: imagenames}
+	uqnin := CommonInput{SortInput: imagenames}
 	uqnchr, unerr := uqnin.GetUniqueNumberFromTags()
 	if unerr != nil {
 		return ImageResponse{}, unerr
 	}
 
 	imageCreateResult, imgerr := ec2.CreateImage(
-		&aws.ImageCreateInput{
+		&neuronaws.ImageCreateInput{
 			Description: "This image is captured by neuron api for " + instanceName[0].InstanceName + " @ " + nowTime,
 			InstanceId:  img.InstanceId,
 			ServerName:  instanceName[0].InstanceName + "-snapshot-" + strconv.Itoa(uqnchr),
@@ -104,18 +103,14 @@ func (img *ImageCreateInput) CreateImage(con aws.EstablishConnectionInput) (Imag
 	}
 
 	// This will take care of creation of primary tags to the image
-	tags := common.Tag{*imageCreateResult.ImageId, "Name", instanceName[0].InstanceName + "-snapshot" + strconv.Itoa(uqnchr)}
+	tags := new(Tag)
+	tags.Resource = *imageCreateResult.ImageId
+	tags.Name = "Name"
+	tags.Value = instanceName[0].InstanceName + "-snapshot" + strconv.Itoa(uqnchr)
 	_, tagErr := tags.CreateTags(con)
 	if tagErr != nil {
 		return ImageResponse{}, tagErr
 	}
-
-	/* This will be versioning the images, now this has no much impact but once neuron is built completely this will be helpful
-	tags2 := common.Tag{*imageCreateResult.ImageId, "Version", "1"}
-	_, tag2_err := tags2.CreateTags()
-	if tag2_err != nil {
-		return nil, tag2_err
-	}*/
 
 	if img.GetRaw == true {
 		return ImageResponse{CreateImageRaw: imageCreateResult}, nil

@@ -1,4 +1,4 @@
-package awsinstance
+package aws
 
 import (
 	"fmt"

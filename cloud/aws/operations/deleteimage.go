@@ -1,4 +1,4 @@
-package awsimage
+package aws
 
 import (
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
