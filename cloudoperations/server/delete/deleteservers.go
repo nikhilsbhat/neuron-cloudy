@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
+	awsserver "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -14,7 +14,7 @@ import (
 // DeleteServerResponse will return the filtered/unfiltered responses of variuos clouds.
 type DeleteServerResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse []server.ServerResponse `json:"AwsResponse,omitempty"`
+	AwsResponse []awsserver.ServerResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -42,7 +42,7 @@ func (serv *DeleteServersInput) DeleteServer() (DeleteServerResponse, error) {
 
 		// I will call DeleteServer of interface and get the things done
 		if serv.InstanceIds != nil {
-			serverin := server.DeleteServerInput{}
+			serverin := awsserver.DeleteServerInput{}
 			serverin.InstanceIds = serv.InstanceIds
 			serverin.GetRaw = serv.Cloud.GetRaw
 			serverResponse, serverr := serverin.DeleteServer(authInpt)
@@ -51,7 +51,7 @@ func (serv *DeleteServersInput) DeleteServer() (DeleteServerResponse, error) {
 			}
 			return DeleteServerResponse{AwsResponse: serverResponse}, nil
 		} else if serv.VpcId != "" {
-			serverin := server.DeleteServerInput{}
+			serverin := awsserver.DeleteServerInput{}
 			serverin.VpcId = serv.VpcId
 			serverin.GetRaw = serv.Cloud.GetRaw
 			serverResponse, serverr := serverin.DeleteServerFromVpc(authInpt)

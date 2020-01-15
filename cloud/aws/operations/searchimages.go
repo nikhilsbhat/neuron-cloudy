@@ -1,4 +1,4 @@
-package awsimage
+package aws
 
 import (
 	"fmt"

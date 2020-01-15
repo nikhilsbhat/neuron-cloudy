@@ -1,6 +1,9 @@
-// Package awscommon has set of methods which performs the task idependent of resource types in cloud
-// such as dealing with availability-zone, region and etc.
-package awscommon
+// Package aws will help one in creating/deleting/updating/fetching informaation of various resources in aws.
+// But this is tailor made for this application if one needs
+// customized result, he/she has to write one similar to this for them by calling the (master) interface.
+// This package is capable of returining both custom response
+// and raw from cloud depending on what you pass.
+package aws
 
 import (
 	"sort"

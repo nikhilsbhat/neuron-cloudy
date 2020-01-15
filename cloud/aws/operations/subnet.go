@@ -1,11 +1,10 @@
-package awsnetwork
+package aws
 
 import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/service/ec2"
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 )
 
 // SubnetReponse is a struct that will be the response type of almost all the subnet related activities under cloud/operations.
@@ -54,7 +53,10 @@ func (subin *NetworkCreateInput) CreateSubnet(con aws.EstablishConnectionInput) 
 	}
 
 	// I will be the spock for tags creation.
-	tags := common.Tag{*sub.Subnet.SubnetId, "Name", subin.Name}
+	tags := new(Tag)
+	tags.Resource = *sub.Subnet.SubnetId
+	tags.Resource = "Name"
+	tags.Value = subin.Name
 	subtag, tagerr := tags.CreateTags(con)
 	if tagerr != nil {
 		return SubnetReponse{}, tagerr

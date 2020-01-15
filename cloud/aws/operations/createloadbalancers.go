@@ -1,9 +1,4 @@
-// Package loadbalancer will help one in creating/deleting/updating/fetching loabalancers in aws.
-// But this is tailor made for this application if one needs
-// customized result, he/she has to write one similar to this for them by calling the (master) interface.
-// This package is capable of returining both custom response
-// and raw from cloud depending on what you pass.
-package loadbalancer
+package aws
 
 import (
 	"fmt"
@@ -12,7 +7,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/elb"
 	"github.com/aws/aws-sdk-go/service/elbv2"
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	network "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
 )
 
 // LoadBalanceCreateInput implements CreateLoadBalancer to create loadbalancer.
@@ -117,7 +111,7 @@ func (load *LoadBalanceCreateInput) CreateLoadBalancer(con aws.EstablishConnecti
 	if load.SubnetIds != nil {
 		lbin.Subnets = load.SubnetIds
 	} else {
-		subnetsIn := network.GetNetworksInput{VpcIds: []string{load.VpcId}}
+		subnetsIn := GetNetworksInput{VpcIds: []string{load.VpcId}}
 		subnetsResult, suberr := subnetsIn.GetSubnetsFromVpc(con)
 		if suberr != nil {
 			return LoadBalanceResponse{}, suberr
@@ -131,7 +125,7 @@ func (load *LoadBalanceCreateInput) CreateLoadBalancer(con aws.EstablishConnecti
 	if load.SecurityGroupIds != nil {
 		lbin.SecurityGroups = load.SecurityGroupIds
 	} else {
-		secInput := network.NetworkComponentInput{VpcIds: []string{load.VpcId}}
+		secInput := NetworkComponentInput{VpcIds: []string{load.VpcId}}
 		secResult, err := secInput.GetSecFromVpc(con)
 		if err != nil {
 			return LoadBalanceResponse{}, err
@@ -181,7 +175,7 @@ func (load *LoadBalanceCreateInput) CreateLoadBalancer(con aws.EstablishConnecti
 
 	case "application":
 
-		if load.IpAddressType == "" {
+		if len(load.IpAddressType) == 0 {
 			lbin.IpAddressType = "ipv4"
 		} else {
 			lbin.IpAddressType = load.IpAddressType

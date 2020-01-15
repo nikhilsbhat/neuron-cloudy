@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	image "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/image"
+	awsimage "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -15,7 +15,7 @@ import (
 // This also can contain the response from various cloud, but will deliver what was passed to it.
 type CreateImageResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse []image.ImageResponse `json:"AwsResponse,omitempty"`
+	AwsResponse []awsimage.ImageResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -40,10 +40,10 @@ func (img *CreateImageInput) CreateImage() (CreateImageResponse, error) {
 		// authorizing further request
 		authinpt := auth.EstablishConnectionInput{Region: img.Cloud.Region, Resource: "ec2", Session: sess}
 
-		responseImage := make([]image.ImageResponse, 0)
+		responseImage := make([]awsimage.ImageResponse, 0)
 
 		for _, id := range img.InstanceIds {
-			imgcreate := new(image.ImageCreateInput)
+			imgcreate := new(awsimage.ImageCreateInput)
 			imgcreate.InstanceId = id
 			imgcreate.GetRaw = img.Cloud.GetRaw
 			response, imgerr := imgcreate.CreateImage(authinpt)

@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	image "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/image"
+	awsimage "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -15,7 +15,7 @@ import (
 // This also can contain the response from various cloud, but will deliver what was passed to it.
 type DeleteImageResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse []image.ImageResponse `json:"AwsResponse,omitempty"`
+	AwsResponse []awsimage.ImageResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -40,13 +40,13 @@ func (img *DeleteImageInput) DeleteImage() (DeleteImageResponse, error) {
 		// authorizing further request
 		authinpt := auth.EstablishConnectionInput{Region: img.Cloud.Region, Resource: "ec2", Session: sess}
 
-		delimages := new(image.DeleteImageInput)
+		delimages := new(awsimage.DeleteImageInput)
 		delimages.ImageIds = img.ImageIds
 		result, err := delimages.DeleteImage(authinpt)
 		if err != nil {
 			return DeleteImageResponse{}, err
 		}
-		response := make([]image.ImageResponse, 0)
+		response := make([]awsimage.ImageResponse, 0)
 		response = append(response, result)
 		return DeleteImageResponse{AwsResponse: response}, nil
 

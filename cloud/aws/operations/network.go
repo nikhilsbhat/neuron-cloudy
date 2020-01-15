@@ -1,4 +1,4 @@
-package awsnetwork
+package aws
 
 import (
 	"fmt"
@@ -7,7 +7,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/ec2"
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 )
 
 // NetworkCreateInput will implement almost all the creation of network and its components under cloud/operations.
@@ -88,10 +87,10 @@ type UpdateNetworkInput struct {
 
 // Filters will help one to have a hold on the call that they make, will help to filter the quiries.
 // Ex: use this while fetching list of subnet from appropriate vpc, by using vpc as a 'Value' of filter.
-type Filters struct {
-	Name  string
-	Value interface{}
-}
+// type Filters struct {
+// 	Name  string
+// 	Value interface{}
+// }
 
 // CreateNetwork is a customized method for network creation, if one needs to create the individual components of network then call the appropriate methods.
 func (net *NetworkCreateInput) CreateNetwork(con aws.EstablishConnectionInput) (NetworkResponse, error) {
@@ -118,7 +117,7 @@ func (net *NetworkCreateInput) CreateNetwork(con aws.EstablishConnectionInput) (
 		return NetworkResponse{}, err
 	}
 
-	zonein := common.CommonInput{}
+	zonein := CommonInput{}
 	zones, zonerr := zonein.GetAvailabilityZones(con)
 	if zonerr != nil {
 		return NetworkResponse{}, zonerr
@@ -480,7 +479,7 @@ func (net *UpdateNetworkInput) UpdateNetwork(con aws.EstablishConnectionInput) (
 			// Collects all the available availability zones
 			zones := make([]string, 0)
 			if net.Network.Zone == "" {
-				zonein := common.CommonInput{}
+				zonein := CommonInput{}
 				zone, zonerr := zonein.GetAvailabilityZones(con)
 				if zonerr != nil {
 					return NetworkResponse{}, zonerr
@@ -507,7 +506,7 @@ func (net *UpdateNetworkInput) UpdateNetwork(con aws.EstablishConnectionInput) (
 			}
 
 			// Getting Unique digit to name subnet uniquly
-			uqnin := common.CommonInput{SortInput: subnets}
+			uqnin := CommonInput{SortInput: subnets}
 			uqnchr, unerr := uqnin.GetUniqueNumberFromTags()
 			if unerr != nil {
 				return NetworkResponse{}, unerr
