@@ -1,6 +1,4 @@
-// Package loadbalancer contains methods that responds to and with tailor made input and outputs.
-// To talk to cloud directly build wrapper around the respective interface as per the requirements.
-package loadbalancer
+package aws
 
 import (
 	"fmt"

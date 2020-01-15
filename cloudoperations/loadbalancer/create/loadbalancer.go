@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	loadbalance "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/loadbalancer"
+	awslb "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -14,7 +14,7 @@ import (
 // LoadBalanceResponse will return the filtered/unfiltered responses of variuos clouds.
 type LoadBalanceResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse loadbalance.LoadBalanceResponse `json:"AwsResponse,omitempty"`
+	AwsResponse awslb.LoadBalanceResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -48,7 +48,7 @@ func (lb *LbCreateInput) CreateLoadBalancer() (LoadBalanceResponse, error) {
 			authinpt.Resource = "elb2"
 		}
 
-		lbin := new(loadbalance.LoadBalanceCreateInput)
+		lbin := new(awslb.LoadBalanceCreateInput)
 		lbin.GetRaw = lb.Cloud.GetRaw
 		lbin.Name = lb.Name
 		lbin.VpcId = lb.VpcId

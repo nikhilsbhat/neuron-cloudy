@@ -7,7 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	network "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
+	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -15,7 +15,7 @@ import (
 // DeleteNetworkResponse returns the filtered/unfiltered responses of variuos clouds.
 type DeleteNetworkResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse network.DeleteNetworkResponse `json:"AwsResponse,omitempty"`
+	AwsResponse awsnetwork.DeleteNetworkResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -42,7 +42,7 @@ func (net *DeleteNetworkInput) DeleteNetwork() (DeleteNetworkResponse, error) {
 		authinpt := auth.EstablishConnectionInput{Region: net.Cloud.Region, Resource: "ec2", Session: sess}
 
 		// deletes network from aws
-		networkin := new(network.DeleteNetworkInput)
+		networkin := new(awsnetwork.DeleteNetworkInput)
 		networkin.VpcIds = net.VpcIds
 		networkin.GetRaw = net.Cloud.GetRaw
 		response, netErr := networkin.DeleteNetwork(authinpt)

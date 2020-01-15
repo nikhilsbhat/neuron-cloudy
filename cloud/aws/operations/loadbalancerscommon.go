@@ -1,4 +1,4 @@
-package loadbalancer
+package aws
 
 /*import (
 	aws "neuron/cloud/aws/interface"

@@ -7,7 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	network "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
+	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -15,7 +15,7 @@ import (
 // CreateNetworkResponse is a struct that will return the filtered/unfiltered responses of variuos clouds.
 type CreateNetworkResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse network.NetworkResponse `json:"AwsResponse,omitempty"`
+	AwsResponse awsnetwork.NetworkResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -42,7 +42,7 @@ func (net *NetworkCreateInput) CreateNetwork() (CreateNetworkResponse, error) {
 		authinpt := auth.EstablishConnectionInput{Region: net.Cloud.Region, Resource: "ec2", Session: sess}
 
 		// Fetching all the networks across cloud aws
-		networkin := new(network.NetworkCreateInput)
+		networkin := new(awsnetwork.NetworkCreateInput)
 		networkin.Name = net.Name
 		networkin.VpcCidr = net.VpcCidr
 		networkin.SubCidrs = net.SubCidr

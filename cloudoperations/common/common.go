@@ -1,10 +1,5 @@
 package commonoperations
 
-import (
-	db "github.com/nikhilsbhat/neuron/database"
-	dbcommon "github.com/nikhilsbhat/neuron/database/common"
-)
-
 const (
 	//
 	DefaultAwsResponse = "We have not reached to aws yet on this resource"
@@ -21,25 +16,3 @@ const (
 	// AlphaResponse helps in constructing response for Alpha resources.
 	AlphaResponse = "%s is in Alpha and supports very minimal support."
 )
-
-// GetCredentialsInput holds the information of profile and cloud that has to be fetched from database.
-type GetCredentialsInput struct {
-	Profile string
-	Cloud   string
-}
-
-// GetCredentials helps in fetching the of the credentials of the specified user along with the cloud details asked for.
-func GetCredentials(gcred *GetCredentialsInput) (db.CloudProfiles, error) {
-
-	//fetchinig credentials from loged-in user to establish the connection with appropriate cloud.
-	creds, crderr := dbcommon.GetCloudCredentails(
-		db.UserData{UserName: "nikhibt434@gmail", Password: "42bhat24"},
-		db.GetCloudAccess{ProfileName: gcred.Profile, Cloud: gcred.Cloud},
-		db.DataDetail{"neuron", "users"},
-	)
-	if crderr != nil {
-		return db.CloudProfiles{}, crderr
-	}
-
-	return creds, nil
-}

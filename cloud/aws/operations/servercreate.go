@@ -1,4 +1,4 @@
-package awsinstance
+package aws
 
 import (
 	b64 "encoding/base64"
@@ -7,8 +7,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/ec2"
 	aws "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	common "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
-	network "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
 )
 
 // CreateServerInput will implement the methods for creating instances and holds the value for the same.
@@ -63,7 +61,7 @@ func (csrv *CreateServerInput) CreateServer(con aws.EstablishConnectionInput) ([
 	}
 
 	// I will make a decision which security group to pick
-	subInput := network.GetNetworksInput{SubnetIds: []string{csrv.SubnetId}}
+	subInput := GetNetworksInput{SubnetIds: []string{csrv.SubnetId}}
 	subResult, suberr := subInput.FindSubnet(con)
 	if suberr != nil {
 		return nil, suberr
@@ -82,7 +80,7 @@ func (csrv *CreateServerInput) CreateServer(con aws.EstablishConnectionInput) ([
 			return nil, vpcerr
 		}
 
-		secInput := network.NetworkComponentInput{VpcIds: []string{vpcRes.VpcId}}
+		secInput := NetworkComponentInput{VpcIds: []string{vpcRes.VpcId}}
 		secRes, secerr := secInput.GetSecFromVpc(con)
 		if secerr != nil {
 			return nil, nil
@@ -144,7 +142,10 @@ func (csrv *CreateServerInput) CreateServer(con aws.EstablishConnectionInput) ([
 
 	// creating tags for the server
 	for i, instance := range instanceIds {
-		tags := common.Tag{instance, "Name", csrv.InstanceName + "-" + strconv.Itoa(i)}
+		tags := new(Tag)
+		tags.Resource = instance
+		tags.Name = "Name"
+		tags.Value = csrv.InstanceName + "-" + strconv.Itoa(i)
 		_, tagErr := tags.CreateTags(con)
 		if tagErr != nil {
 			return nil, tagErr

@@ -7,7 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
+	awsserver "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -15,7 +15,7 @@ import (
 // ServerCreateResponse will return the filtered/unfiltered responses of variuos clouds.
 type ServerCreateResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse []server.ServerResponse `json:"AwsResponse,omitempty"`
+	AwsResponse []awsserver.ServerResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -41,7 +41,7 @@ func (serv ServerCreateInput) CreateServer() (ServerCreateResponse, error) {
 
 		// I will call CreateServer of interface and get the things done
 
-		serverin := server.CreateServerInput{}
+		serverin := awsserver.CreateServerInput{}
 		serverin.InstanceName = serv.InstanceName
 		serverin.ImageId = serv.ImageId
 		serverin.InstanceType = serv.Flavor
