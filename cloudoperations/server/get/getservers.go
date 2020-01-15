@@ -7,8 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	awscommon "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
-	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
+	awsserver "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -16,7 +15,7 @@ import (
 // GetServerResponse will return the filtered/unfiltered responses of variuos clouds.
 type GetServerResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse []server.ServerResponse `json:"AwsResponse,omitempty"`
+	AwsResponse []awsserver.ServerResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -44,7 +43,7 @@ func (serv *GetServersInput) GetServersDetails() (GetServerResponse, error) {
 		// I will call CreateServer of interface and get the things done
 
 		if serv.InstanceIds != nil {
-			serverin := server.DescribeInstanceInput{}
+			serverin := awsserver.DescribeInstanceInput{}
 			serverin.InstanceIds = serv.InstanceIds
 			serverin.GetRaw = serv.Cloud.GetRaw
 			serverResponse, serverr := serverin.GetServersDetails(authinpt)
@@ -53,7 +52,7 @@ func (serv *GetServersInput) GetServersDetails() (GetServerResponse, error) {
 			}
 			return GetServerResponse{AwsResponse: serverResponse}, nil
 		} else if serv.SubnetIds != nil {
-			serverin := server.DescribeInstanceInput{}
+			serverin := awsserver.DescribeInstanceInput{}
 			serverin.SubnetIds = serv.SubnetIds
 			serverin.GetRaw = serv.Cloud.GetRaw
 			serverResponse, serverr := serverin.GetServersFromSubnet(authinpt)
@@ -62,7 +61,7 @@ func (serv *GetServersInput) GetServersDetails() (GetServerResponse, error) {
 			}
 			return GetServerResponse{AwsResponse: serverResponse}, nil
 		} else if serv.VpcIds != nil {
-			serverin := server.DescribeInstanceInput{}
+			serverin := awsserver.DescribeInstanceInput{}
 			serverin.VpcIds = serv.VpcIds
 			serverin.GetRaw = serv.Cloud.GetRaw
 			serverResponse, serverr := serverin.GetServersFromNetwork(authinpt)
@@ -71,7 +70,7 @@ func (serv *GetServersInput) GetServersDetails() (GetServerResponse, error) {
 			}
 			return GetServerResponse{AwsResponse: serverResponse}, nil
 		} else {
-			serverin := server.DescribeInstanceInput{GetRaw: serv.Cloud.GetRaw}
+			serverin := awsserver.DescribeInstanceInput{GetRaw: serv.Cloud.GetRaw}
 			serverResponse, serverr := serverin.GetAllServers(authinpt)
 			if serverr != nil {
 				return GetServerResponse{}, serverr
@@ -107,13 +106,13 @@ func (serv *GetServersInput) GetAllServers() ([]GetServerResponse, error) {
 		authinpt := auth.EstablishConnectionInput{Region: serv.Cloud.Region, Resource: "ec2", Session: sess}
 
 		// Fetching list of regions to get details  of server across the account
-		regionin := awscommon.CommonInput{}
+		regionin := awsserver.CommonInput{}
 		regions, regerr := regionin.GetRegions(authinpt)
 		if regerr != nil {
 			return nil, regerr
 		}
 
-		reg := make(chan []server.ServerResponse, len(regions.Regions))
+		reg := make(chan []awsserver.ServerResponse, len(regions.Regions))
 		serv.getservers(regions.Regions, reg)
 
 		serverResponse := make([]GetServerResponse, 0)
@@ -137,7 +136,7 @@ func (serv *GetServersInput) GetAllServers() ([]GetServerResponse, error) {
 
 // this will be called by getallservers, he is the one who gets the details of all the servers,
 // and send over a channel.
-func (serv *GetServersInput) getservers(regions []string, reg chan []server.ServerResponse) {
+func (serv *GetServersInput) getservers(regions []string, reg chan []awsserver.ServerResponse) {
 
 	switch strings.ToLower(serv.Cloud.Name) {
 	case "aws":
@@ -151,7 +150,7 @@ func (serv *GetServersInput) getservers(regions []string, reg chan []server.Serv
 
 				//authorize
 				authinpt := auth.EstablishConnectionInput{Region: region, Resource: "ec2", Session: sess}
-				serverin := server.DescribeInstanceInput{GetRaw: serv.Cloud.GetRaw}
+				serverin := awsserver.DescribeInstanceInput{GetRaw: serv.Cloud.GetRaw}
 				serverResponse, _ := serverin.GetAllServers(authinpt)
 				reg <- serverResponse
 			}(region)

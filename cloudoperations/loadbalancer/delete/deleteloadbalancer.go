@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	loadbalance "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/loadbalancer"
+	awslb "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -14,7 +14,7 @@ import (
 // LoadBalancerDeleteResponse will return the filtered/unfiltered responses of variuos clouds.
 type LoadBalancerDeleteResponse struct {
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse []loadbalance.LoadBalanceDeleteResponse `json:"AwsResponse,omitempty"`
+	AwsResponse []awslb.LoadBalanceDeleteResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -48,7 +48,7 @@ func (lb *LbDeleteInput) DeleteLoadBalancer() (LoadBalancerDeleteResponse, error
 			authinpt.Resource = "elb2"
 		}
 
-		lbin := new(loadbalance.DeleteLoadbalancerInput)
+		lbin := new(awslb.DeleteLoadbalancerInput)
 		lbin.LbNames = lb.LbNames
 		lbin.LbArns = lb.LbArns
 		lbin.Type = lb.Type

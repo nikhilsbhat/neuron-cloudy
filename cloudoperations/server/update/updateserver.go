@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
+	awsserver "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -15,7 +15,7 @@ import (
 type UpdateServersResponse struct {
 
 	// Contains filtered/unfiltered response of AWS.
-	AwsResponse []server.ServerResponse `json:"AwsResponse,omitempty"`
+	AwsResponse []awsserver.ServerResponse `json:"AwsResponse,omitempty"`
 
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
@@ -44,7 +44,7 @@ func (serv *UpdateServersInput) UpdateServers() (UpdateServersResponse, error) {
 		authinpt := auth.EstablishConnectionInput{Region: serv.Cloud.Region, Resource: "ec2", Session: sess}
 
 		// I will call UpdateServer of interface and get the things done
-		serverin := server.UpdateServerInput{InstanceIds: serv.InstanceIds, Action: serv.Action, GetRaw: serv.Cloud.GetRaw}
+		serverin := awsserver.UpdateServerInput{InstanceIds: serv.InstanceIds, Action: serv.Action, GetRaw: serv.Cloud.GetRaw}
 		response, err := serverin.UpdateServer(authinpt)
 		if err != nil {
 			return UpdateServersResponse{}, err

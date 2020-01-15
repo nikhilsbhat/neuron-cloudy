@@ -3,7 +3,7 @@
 package networkget
 
 import (
-	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
+	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	gcp "github.com/nikhilsbhat/neuron-cloudy/cloud/gcp/operations"
 	cmn "github.com/nikhilsbhat/neuron-cloudy/cloudoperations"
 )

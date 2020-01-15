@@ -7,8 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	awscommon "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
-	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
+	awsnetwork "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	gcp "github.com/nikhilsbhat/neuron-cloudy/cloud/gcp/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
@@ -80,7 +79,7 @@ func (net GetNetworksInput) GetAllNetworks() ([]GetNetworksResponse, error) {
 
 		// calls GetAllNetworks of interface and get the things done
 		// Fetching all the regions from the cloud aws
-		regionin := awscommon.CommonInput{}
+		regionin := awsnetwork.CommonInput{}
 		regions, regerr := regionin.GetRegions(authinpt)
 		if regerr != nil {
 			return nil, regerr
