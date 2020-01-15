@@ -3,13 +3,13 @@ package networkdelete
 import (
 	"fmt"
 
+	"strings"
+
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	network "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/network"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
-
-	"strings"
 )
 
 // DeleteNetworkResponse returns the filtered/unfiltered responses of variuos clouds.
@@ -35,18 +35,13 @@ func (net *DeleteNetworkInput) DeleteNetwork() (DeleteNetworkResponse, error) {
 	switch strings.ToLower(net.Cloud.Name) {
 	case "aws":
 
-		creds, err := common.GetCredentials(&common.GetCredentialsInput{Profile: net.Cloud.Profile, Cloud: net.Cloud.Name})
-		if err != nil {
-			return DeleteNetworkResponse{}, err
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: net.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// Gets the established session so that we can carry out the process in cloud.
+		sess := (net.Cloud.Client).(*session.Session)
 
 		//authorizing to request further
 		authinpt := auth.EstablishConnectionInput{Region: net.Cloud.Region, Resource: "ec2", Session: sess}
 
-		// deleteting network from aws
+		// deletes network from aws
 		networkin := new(network.DeleteNetworkInput)
 		networkin.VpcIds = net.VpcIds
 		networkin.GetRaw = net.Cloud.GetRaw

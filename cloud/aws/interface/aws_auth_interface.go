@@ -1,3 +1,6 @@
+// Package neuronaws is the plain apisource of cloud AWS, consuming its function works but no abstraction.
+// Rather calling its function consider calling the fucntions of commoncloud which has abstraction and would help in many aspect.
+// If still consider calling plain apisource, we prefer calling cloud native SDKs rather using this.
 package neuronaws
 
 import (
@@ -23,13 +26,11 @@ type EstablishedSession struct {
 
 // EstablishConnectionInput implements EstablishConnection which establishes the session for specific resource in aws.
 type EstablishConnectionInput struct {
-	// The default region required to establish the session.
+	// Region required to establish the session.
 	Region string
-
-	// The name of the resource of who's the connection has to be established.
+	// Resource name to which the connection has to be established.
 	Resource string
-
-	// This holds the actualsession from aws, which means actual session has tpo be created even before we call this method.
+	// Session holds the actual session from aws, which means actual session has to be created even before we call this method.
 	// And the same can be done with the help of "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	Session *session.Session
 }

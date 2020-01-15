@@ -9,14 +9,18 @@ import (
 
 // AwsCommonInput holds the common input values to perform the operations.
 type AwsCommonInput struct {
+	// AvailabilityZone holds the name of the zone who's information has to be retrived.
 	AvailabilityZone string `json:"AvailabilityZone,omitempty"`
 }
 
 // CreateTagsInput holds the input values which helps in creating tags for the resource created in aws.
 type CreateTagsInput struct {
+	// Resource name to which requries the naming.
 	Resource string
-	Name     string
-	Value    string
+	// Name or the Tag name that has to be assigned to the resource that was created.
+	Name string
+	// Value for the tag that has to be created.
+	Value string
 }
 
 // DescribeAllAvailabilityZones describes all the availability zones present in the aws.

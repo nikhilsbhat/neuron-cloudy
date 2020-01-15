@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	image "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/image"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -34,15 +34,10 @@ func (img *DeleteImageInput) DeleteImage() (DeleteImageResponse, error) {
 	switch strings.ToLower(img.Cloud.Name) {
 	case "aws":
 
-		creds, crderr := common.GetCredentials(&common.GetCredentialsInput{Profile: img.Cloud.Profile, Cloud: img.Cloud.Name})
-		if crderr != nil {
-			return DeleteImageResponse{}, crderr
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: img.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// gets the established session so that we can carry out the process in cloud.
+		sess := (img.Cloud.Client).(*session.Session)
 
-		//authorizing to request further
+		// authorizing further request
 		authinpt := auth.EstablishConnectionInput{Region: img.Cloud.Region, Resource: "ec2", Session: sess}
 
 		delimages := new(image.DeleteImageInput)

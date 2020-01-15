@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	awscommon "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -33,23 +33,14 @@ func (reg *GetRegionInput) GetRegions() (GetRegionsResponse, error) {
 	switch strings.ToLower(reg.Cloud.Name) {
 	case "aws":
 
-		creds, err := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: reg.Cloud.Profile,
-				Cloud:   reg.Cloud.Name,
-			},
-		)
-		if err != nil {
-			return GetRegionsResponse{}, err
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: reg.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// gets the established session so that we can carry out the process in cloud
+		//sessionInput := ssess.CreateAwsSessionInput{Region: reg.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
+		sess := (reg.Cloud.Client).(*session.Session)
 
-		//authorizing to request further
+		// authorizing to request further
 		authinpt := auth.EstablishConnectionInput{Region: reg.Cloud.Region, Resource: "ec2", Session: sess}
 
-		// I will call create_vpc and get the things done
+		// this calls create_vpc and get the things done
 		regionin := awscommon.CommonInput{}
 		regionin.GetRaw = reg.Cloud.GetRaw
 		response, regErr := regionin.GetRegions(authinpt)

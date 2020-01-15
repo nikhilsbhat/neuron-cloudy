@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -37,19 +37,8 @@ func (serv *UpdateServersInput) UpdateServers() (UpdateServersResponse, error) {
 	switch strings.ToLower(serv.Cloud.Name) {
 	case "aws":
 
-		creds, crederr := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: serv.Cloud.Profile,
-				Cloud:   serv.Cloud.Name,
-			},
-		)
-
-		if crederr != nil {
-			return UpdateServersResponse{}, crederr
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: serv.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// Gets the established session so that it can carry out the process in cloud.
+		sess := (serv.Cloud.Client).(*session.Session)
 
 		//authorizing to request further
 		authinpt := auth.EstablishConnectionInput{Region: serv.Cloud.Region, Resource: "ec2", Session: sess}

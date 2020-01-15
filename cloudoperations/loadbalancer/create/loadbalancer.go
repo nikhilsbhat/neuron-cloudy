@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	loadbalance "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/loadbalancer"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -34,20 +34,10 @@ func (lb *LbCreateInput) CreateLoadBalancer() (LoadBalanceResponse, error) {
 	switch strings.ToLower(lb.Cloud.Name) {
 	case "aws":
 
-		creds, err := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: lb.Cloud.Profile,
-				Cloud:   lb.Cloud.Name,
-			},
-		)
-		if err != nil {
-			return LoadBalanceResponse{}, err
-		}
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: lb.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// Gets the established session so that it can carry out the process in cloud
+		sess := (lb.Cloud.Client).(*session.Session)
 
-		//authorizing to request further
+		// authorizing further request
 		authinpt := new(auth.EstablishConnectionInput)
 		authinpt.Region = lb.Cloud.Region
 		authinpt.Session = sess

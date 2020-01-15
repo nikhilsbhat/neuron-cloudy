@@ -10,42 +10,62 @@ import (
 
 // CreateServerInput holds all required values to create a server/instance in aws.
 type CreateServerInput struct {
-	ImageId        string
-	InstanceType   string
-	KeyName        string
-	MaxCount       int64
-	MinCount       int64
-	SubnetId       string
+	// ImageId is the ID of the image of which the information has to be retrived.
+	ImageId string
+	// InstanceType of the the instance that has to be created ex: t2.micro, t2.medium etc.
+	InstanceType string
+	// KeyName refers to the name of the key-value pair that has to be assossiated with the instance that would be created.
+	KeyName string
+	// MaxCount of the instance to be created (defaults to 1).
+	MaxCount int64
+	// MinCount of the instance to be created (defaults to 1).
+	MinCount int64
+	// SubnetId is the ID of the subnetwork in which the instance has to be created.
+	SubnetId string
+	// SecurityGroups is the ID of the securoty group which has to be associated with instance.
 	SecurityGroups []string
-	UserData       string
-	AssignPubIp    bool
+	// UserData are the command/script has to be passed while instance bootup.
+	UserData string
+	// AssignPubIp is the deciding factor for opening instance to public (defaults to false making instance accessible only at private network).
+	AssignPubIp bool
 }
 
 // DescribeComputeInput holds all the required values to describe the instance/vm or any compute resources in aws.
 type DescribeComputeInput struct {
+	// InstanceIds are the IDs of the instances of whom the information has to be retrived.
 	InstanceIds []string
-	ImageIds    []string
-	Filters     Filters
+	// ImageIds are the IDs of the images of whom the information has to be retrived.
+	ImageIds []string
+	// Filters can be applied on the resource to fetch more appropriate information.
+	Filters Filters
 }
 
 // UpdateComputeInput holds all the required values to update the compute resources in aws.
 type UpdateComputeInput struct {
+	// InstanceIds are the IDs of the instances which reqires updation.
 	InstanceIds []string
-	Force       string
+	// Force will forcefully apply the updates on the resource.
+	Force string
 }
 
 // DeleteComputeInput holds the required details for deleting compute resource.
 type DeleteComputeInput struct {
-	ImageId     string
-	SnapshotId  string
+	// ImageId is the ID of the image which has to be deleted.
+	ImageId string
+	// SnapshotId is the ID of the snapshot associated to an image which has to be deleted.
+	SnapshotId string
+	// InstanceIds are the IDs of the instances that has to be deleted.
 	InstanceIds []string
 }
 
 // ImageCreateInput holds the details for creation of imagfe in aws.
 type ImageCreateInput struct {
+	// Description to the image would be created.
 	Description string
-	ServerName  string
-	InstanceId  string
+	// ServerName is the name of the instance who's image has to be captured (this would be fetched automatically by other apis).
+	ServerName string
+	// InstanceId is the ID of the instance of which the image has to be captured.
+	InstanceId string
 }
 
 // CreateInstance will create instance/vm as per the configuration specified.

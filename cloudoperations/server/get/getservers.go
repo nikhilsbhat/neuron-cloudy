@@ -5,13 +5,12 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
 	awscommon "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/common"
 	server "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/server"
-	awssess "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/sessions"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
-	db "github.com/nikhilsbhat/neuron/database"
 )
 
 // GetServerResponse will return the filtered/unfiltered responses of variuos clouds.
@@ -37,18 +36,8 @@ func (serv *GetServersInput) GetServersDetails() (GetServerResponse, error) {
 	switch strings.ToLower(serv.Cloud.Name) {
 	case "aws":
 
-		creds, crederr := common.GetCredentials(
-			&common.GetCredentialsInput{
-				Profile: serv.Cloud.Profile,
-				Cloud:   serv.Cloud.Name,
-			},
-		)
-		if crederr != nil {
-			return GetServerResponse{}, crederr
-		}
 		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: serv.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		sess := (serv.Cloud.Client).(*session.Session)
 
 		//authorizing to request further
 		authinpt := auth.EstablishConnectionInput{Region: serv.Cloud.Region, Resource: "ec2", Session: sess}
@@ -108,23 +97,11 @@ func (serv *GetServersInput) GetAllServers() ([]GetServerResponse, error) {
 		return nil, fmt.Errorf(common.DefaultCloudResponse + "GetNetworks")
 	}
 
-	//fetchinig credentials from loged-in user to establish the connection with appropriate cloud.
-	creds, err := common.GetCredentials(
-		&common.GetCredentialsInput{
-			Profile: serv.Cloud.Profile,
-			Cloud:   serv.Cloud.Name,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-
 	switch strings.ToLower(serv.Cloud.Name) {
 	case "aws":
 
-		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: serv.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		// Gets the established session so that it can carry out the process in cloud.
+		sess := (serv.Cloud.Client).(*session.Session)
 
 		//authorize
 		authinpt := auth.EstablishConnectionInput{Region: serv.Cloud.Region, Resource: "ec2", Session: sess}
@@ -137,7 +114,7 @@ func (serv *GetServersInput) GetAllServers() ([]GetServerResponse, error) {
 		}
 
 		reg := make(chan []server.ServerResponse, len(regions.Regions))
-		serv.getservers(regions.Regions, reg, creds)
+		serv.getservers(regions.Regions, reg)
 
 		serverResponse := make([]GetServerResponse, 0)
 		for regionDetail := range reg {
@@ -160,13 +137,12 @@ func (serv *GetServersInput) GetAllServers() ([]GetServerResponse, error) {
 
 // this will be called by getallservers, he is the one who gets the details of all the servers,
 // and send over a channel.
-func (serv *GetServersInput) getservers(regions []string, reg chan []server.ServerResponse, creds db.CloudProfiles) {
+func (serv *GetServersInput) getservers(regions []string, reg chan []server.ServerResponse) {
 
 	switch strings.ToLower(serv.Cloud.Name) {
 	case "aws":
 		// I will establish session so that we can carry out the process in cloud
-		sessionInput := awssess.CreateSessionInput{Region: serv.Cloud.Region, KeyId: creds.KeyId, AcessKey: creds.SecretAccess}
-		sess := sessionInput.CreateAwsSession()
+		sess := (serv.Cloud.Client).(*session.Session)
 		var wg sync.WaitGroup
 		wg.Add(len(regions))
 		for _, region := range regions {

@@ -8,10 +8,16 @@ type Cloud struct {
 	// Along with cloud, pass region in which resource has to be created.
 	Region string `json:"region"`
 
-	// Passing the profile is important, because this will help in fetching the the credentials
+	// Profile is important, because this will help in fetching the the credentials
 	// of cloud stored along with user details.
 	Profile string `json:"profile"`
 
 	// Use this option if in case you need unfiltered output from cloud.
 	GetRaw bool `json:"getraw"`
+
+	// Path to credential file to be specified under this.
+	CredPath string `json:"credpath"`
+
+	// Client for the appropriate cloud, without this
+	Client interface{}
 }
