@@ -16,10 +16,8 @@ import (
 type GetServerResponse struct {
 	// Contains filtered/unfiltered response of AWS.
 	AwsResponse []awsserver.ServerResponse `json:"AwsResponse,omitempty"`
-
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
-
 	// Default response if no inputs or matching the values required.
 	DefaultResponse string `json:"Response,omitempty"`
 }

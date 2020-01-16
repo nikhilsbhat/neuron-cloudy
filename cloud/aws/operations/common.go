@@ -53,14 +53,13 @@ func (r *CommonInput) GetAvailabilityZones(con aws.EstablishConnectionInput) ([]
 	)
 	if err != nil {
 		return nil, err
-	} else {
-		availabilityzones := result.AvailabilityZones
-		zones := make([]string, 0)
-		for _, zone := range availabilityzones {
-			zones = append(zones, *zone.ZoneName)
-		}
-		return zones, nil
 	}
+	availabilityzones := result.AvailabilityZones
+	zones := make([]string, 0)
+	for _, zone := range availabilityzones {
+		zones = append(zones, *zone.ZoneName)
+	}
+	return zones, nil
 }
 
 // CreateTags will create the tags to the selected resource and sends back the response.

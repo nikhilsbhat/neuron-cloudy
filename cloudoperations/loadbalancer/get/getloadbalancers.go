@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	auth "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/interface"
-	loadbalance "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations/loadbalancer"
+	loadbalance "github.com/nikhilsbhat/neuron-cloudy/cloud/aws/operations"
 	common "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/common"
 	support "github.com/nikhilsbhat/neuron-cloudy/cloudoperations/support"
 )
@@ -15,10 +15,8 @@ import (
 type GetLoadbalancerResponse struct {
 	// Contains filtered/unfiltered response of AWS.
 	AwsResponse []loadbalance.LoadBalanceResponse `json:"AwsResponse,omitempty"`
-
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
-
 	// Default response if no inputs or matching the values required.
 	DefaultResponse string `json:"Response,omitempty"`
 }
