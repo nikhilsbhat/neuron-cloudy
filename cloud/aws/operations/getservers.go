@@ -9,16 +9,22 @@ import (
 
 // DescribeInstanceInput implements various methods such as GetServersFromNetwork, GetServersFromSubnet, GetAllServers and GetServersDetails.
 type DescribeInstanceInput struct {
+	// InstanceIds are the list of instance IDs of which the information has to be fetched.
 	InstanceIds []string
-	VpcIds      []string
-	SubnetIds   []string
-	Filters     Filters
-	GetRaw      bool
+	// VpcIds are the list of network IDs of which the instance details has to be retrived.
+	VpcIds []string
+	// SubnetIds are the list of subnet-network IDs of which the instance details has to be retrived.
+	SubnetIds []string
+	// Filters can be applied on the instance to get granular details.
+	Filters Filters
+	GetRaw  bool
 }
 
 // Filters holds the value for the filter to be applied on the servers.
 type Filters struct {
-	Name  string
+	// Name of the filer to be applied.
+	Name string
+	// Value of the filer to be applied.
 	Value []string
 }
 

@@ -11,32 +11,50 @@ import (
 
 // ImageCreateInput implements CreateImage for creation of image
 type ImageCreateInput struct {
+	// InstanceId refers to the ID of the aws instance of which the image has to be captured.
 	InstanceId string
-	GetRaw     bool
+	// GetRaw returns unfiltered response from the cloud if it is set to true.
+	GetRaw bool
 }
 
 // ImageResponse contains filtered/unfiltered response received from aws.
 type ImageResponse struct {
-	Name            string                    `json:"Name,omitempty"`
-	ImageId         string                    `json:"ImageId,omitempty"`
-	ImageIds        []string                  `json:"ImageIds,omitempty"`
-	State           string                    `json:"State,omitempty"`
-	IsPublic        bool                      `json:"IsPublic,omitempty"`
-	CreationDate    string                    `json:"CreationDate,omitempty"`
-	Description     string                    `json:"Description,omitempty"`
-	DefaultResponse string                    `json:"DefaultResponse,omitempty"`
-	DeleteResponse  string                    `json:"ImageResponse,omitempty"`
-	SnapShot        SnapshotDetails           `json:"SnapShot,omitempty"`
-	CreateImageRaw  *ec2.CreateImageOutput    `json:"CreateImageRaw,omitempty"`
-	GetImagesRaw    *ec2.DescribeImagesOutput `json:"GetImagesRaw,omitempty"`
-	GetImageRaw     *ec2.Image                `json:"GetImageRaw,omitempty"`
+	// Name refers to the name of the image captured or retrived.
+	Name string `json:"Name,omitempty"`
+	// ImageId refers to the ID of the image captured or retrived.
+	ImageId string `json:"ImageId,omitempty"`
+	// ImageIds refers to an array of IDs of the image captured or retrived.
+	ImageIds []string `json:"ImageIds,omitempty"`
+	// State defines the state of image pending/deleted etc.
+	State string `json:"State,omitempty"`
+	// IsPublic defines whether the image is publicly avilable.
+	IsPublic bool `json:"IsPublic,omitempty"`
+	// CreationDate holds the date of image creation.
+	CreationDate string `json:"CreationDate,omitempty"`
+	// Description describes the image captured/retrived.
+	Description string `json:"Description,omitempty"`
+	// DefaultResponse would be returened if function encounteres unknown circumstances.
+	DefaultResponse string `json:"DefaultResponse,omitempty"`
+	// DeleteResponse defines the image deletion status.
+	DeleteResponse string `json:"DeleteResponse,omitempty"`
+	// SnapShot return the information gathered as part of image dealt with.
+	SnapShot SnapshotDetails `json:"SnapShot,omitempty"`
+	// CreateImageRaw holds the unfiltered response from aws for image creation.
+	CreateImageRaw *ec2.CreateImageOutput `json:"CreateImageRaw,omitempty"`
+	// GetImagesRaw holds the unfiltered response from aws for retriving details of images.
+	GetImagesRaw *ec2.DescribeImagesOutput `json:"GetImagesRaw,omitempty"`
+	// GetImageRaw holds the unfiltered response from aws for retriving image details.
+	GetImageRaw *ec2.Image `json:"GetImageRaw,omitempty"`
 }
 
 // SnapshotDetails holds the details of snapshot captured such as type disk, size of it and etc.
 type SnapshotDetails struct {
+	// SnapshotId refers to the ID of the snapshot created/associated to the image of which information is retrived.
 	SnapshotId string `json:"SnapshotId,omitempty"`
+	// VolumeType defines the volume type of the snapshot created.
 	VolumeType string `json:"VolumeType,omitempty"`
-	VolumeSize int64  `json:"VolumeSize,omitempty"`
+	// VolumeSize is the volume size of the snapshot associated to an image
+	VolumeSize int64 `json:"VolumeSize,omitempty"`
 }
 
 // CreateImage will capture the image of the server/vm based on the input received from ImageCreateInput.

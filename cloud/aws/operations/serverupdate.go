@@ -9,9 +9,11 @@ import (
 
 // UpdateServerInput implements UpdateServer and other related activities, it holds all necessary details to update server.
 type UpdateServerInput struct {
-	InstanceIds []string `json:"InstanceIds,omitempty"`
-	Action      string
-	GetRaw      bool
+	// InstanceIds are the list of instances which has to updated.
+	InstanceIds []string
+	// Action to be performned on instances as part of updation.
+	Action string
+	GetRaw bool
 }
 
 // UpdateServer updates the server (start/stop and other operations).

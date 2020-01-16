@@ -10,19 +10,18 @@ import (
 
 // GetLoadbalancerInput implements the method GetAllLoadbalancer, GetAllClassicLb, Getloadbalancers, GetAllApplicationLb to fetch the granular level details of loadbalancers.
 type GetLoadbalancerInput struct {
-
-	//optional parameter; The names of the loadbalancers in array of which the information has to be fetched (both classic/network kind of loadbalancers).
-	//one can omit this if he/she is passing ARN's of loadbalancers.
-	//this parameter is mandatory if one wants to fetch the data of classic load balancers.
+	// LbNames are the names of the loadbalancers in array of which the information has to be fetched (both classic/network kind of loadbalancers).
+	// optional parameter;
+	// one can omit this if he/she is passing ARN's of loadbalancers.
+	// this parameter is mandatory if one wants to fetch the data of classic load balancers.
 	LbNames []string `json:"lbnames,omitempty"`
-
-	//optional parameter; The ARN's of the loadbalancers in array of which the information has to be fetched (only application kind of loadbalancers) one can omit this if he/she is passing names of loadbalancers.
+	// LbArns are the ARN's of the loadbalancers in array of which the information has to be fetched (only application kind of loadbalancers) one can omit this if he/she is passing names of loadbalancers.
+	// optional parameter;
 	LbArns []string `json:"lbarns,omitempty"`
-
-	//optional parameter if getallloadbalancer is used; Type of loadbalancers to fetch the appropriate data (classic/application).
+	// Type of loadbalancers to fetch the appropriate data (classic/application).
+	// optional parameter if getallloadbalancer is used;
 	Type string `json:"Type,omitempty"`
-
-	//optional parameter; Only when you need unfiltered result from cloud, enable this field by setting it to true. By default it is set to false.
+	// optional parameter; Only when you need unfiltered result from cloud, enable this field by setting it to true. By default it is set to false.
 	GetRaw bool `json:"getraw"`
 }
 

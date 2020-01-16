@@ -12,67 +12,84 @@ import (
 // LoadBalanceCreateInput implements CreateLoadBalancer to create loadbalancer.
 // It has various parameter which helps in taking decision for creating loabalancer and other aspects of it.
 type LoadBalanceCreateInput struct {
-	//optional parameter; If you provide the name to the loadbalancer well and good, else we will name it with a default one.
-	Name string `json:"name"`
-
-	//optional parameter; The Id of vpc in which the loadbalancer has to be created. Use this only if you don't want to pass subnets directly.
-	//once this option is used we automatically fetch the random subnets from this network.
-	VpcId string `json:"vpcid"`
-
-	//optional parameter; The Ids of subnet in which the loadbalancer has to be created.
-	SubnetIds []string `json:"subnetids"`
-
-	//optional parameter; The names of availability zones to which loadbalancers has to be tagged. Either this or subnets has to be passed, passing both does't work
-	AvailabilityZones []string `json:"availabilityzones"`
-
-	//optional parameter; The Ids of secutiry group to be attached to loadbalancer.
-	//If not mentioned, default security group of VPC will be attached.
-	SecurityGroupIds []string `json:"securitygroupids"`
-
-	//optional parameter; This field is to select the catageory of loadbalancer ex: internal, internet-facing. If not mentioned internet-facing will be created by default.
-	Scheme string `json:"scheme"`
-	//mandatory parameter; The type of loadbalancer required ex: classic, application etc.
-	Type string `json:"type"`
-
-	//required only if the LB protocol is HTTPS else can be initiazed with dummy value
-	SslCert   string `json:"sslCert"`
-	SslPolicy string `json:"sslPolicy"`
-
-	//mandatory parameter; The port of the loabalancer. ex: 8080, 80 etc.
-	LbPort   int64 `json:"lbport"`
-	InstPort int64 `json:"instport"`
-
-	//mandatory parameter; The protocol of loadbalancer. ex: HTTPS, HTTP.
-	Lbproto   string `json:"lbproto"`
-	Instproto string `json:"instproto"`
-
-	//optional parameter; The http code. ex: 200, 404 etc.
-	HttpCode   string `json:"httpcode"`
-	HealthPath string `json:"healthpath"`
-
-	//optional parameter; Select Ip address type ex: ipv4, ipv6. If nothing is passed ipv4 is considered by default.
-	IpAddressType string `json:"ipaddresstype"`
-
-	//optional parameter; Only when you need unfiltered result from cloud, enable this field by setting it to true. By default it is set to false.
-	GetRaw bool `json:"getraw"`
+	// Name refers to the name of the loadbalancer to be created or of which the information to be retrived.
+	// optional parameter; If you provide the name to the loadbalancer well and good, else we will name it with a default one.
+	Name string
+	// VpcId is the ID of the network of which the loadbalancer is part of.
+	// optional parameter; The Id of vpc in which the loadbalancer has to be created. Use this only if you don't want to pass subnets directly.
+	// once this option is used we automatically fetch the random subnets from this network.
+	VpcId string
+	// SubnetIds is an array of subnetworks which wpuld be part of the network retrived.
+	// optional parameter;
+	SubnetIds []string
+	// AvailabilityZones is an array of availability zones to which loadbalancers has to be tagged.
+	// optional parameter;
+	AvailabilityZones []string
+	// SecurityGroupIds are the Ids of secutiry group to be attached to loadbalancer.
+	// optional parameter; If not mentioned, default security group of VPC will be attached.
+	SecurityGroupIds []string
+	// Scheme is to select the catageory of loadbalancer ex: internal, internet-facing. If not mentioned internet-facing will be created by default.
+	// optional parameter;
+	Scheme string
+	// Type are the type of loadbalancer required ex: classic, application etc.
+	// mandatory parameter;
+	Type string
+	// SslCert takes the link to the certificate which will be used to loadbalancer.
+	// required only if the LB protocol is HTTPS else can be initiazed with dummy value
+	SslCert string
+	// SslPolicy defines the policy for the ssl.
+	SslPolicy string
+	// LbPort is the port of loadbalacner to be opened with.
+	// mandatory parameter; The port of the loabalancer. ex: 8080, 80 etc.
+	LbPort int64
+	// InstPort is the port on which loadbalacner has to talk to instance.
+	InstPort int64
+	// Lbproto defines the protocol of loadbalancer.
+	// mandatory parameter; The protocol of loadbalancer. ex: HTTPS, HTTP.
+	Lbproto string
+	// Instproto defines the protocol of instance.
+	Instproto string
+	// HttpCode has the http code. ex: 200, 404 etc.
+	// optional parameter;
+	HttpCode string
+	// HealthPath is the path for loadbalacer to check the healt of the backend systems.
+	HealthPath string
+	// IpAddressType refers to Ip address type ex: ipv4, ipv6. If nothing is passed ipv4 is considered by default.
+	// optional parameter;
+	IpAddressType string
+	// GetRaw returns unfiltered response from the cloud if it is set to true.
+	// optional parameter;
+	GetRaw bool
 }
 
 // LoadBalanceResponse is the output format of CreateLoadBalancer, this holds both filetered and unfiletred response from cloud.
 // But one has to enable flag 'GetRaw' in LoadBalanceCreateInput to get unfiletred output.
 type LoadBalanceResponse struct {
-	Name                   string                           `json:"name,omitempty"`
-	Type                   string                           `json:"type,omitempty"`
-	LbDns                  string                           `json:"lbdns,omitempty"`
-	LbArn                  string                           `json:"lbarn,omitempty"`
-	LbArns                 []string                         `json:"lbarns,omitempty"`
-	TargetArn              interface{}                      `json:"targetarn,omitempty"`
-	ListnerArn             interface{}                      `json:"listnerarn,omitempty"`
-	Createdon              string                           `json:"createdon,omitempty"`
-	VpcId                  string                           `json:"vpcid,omitempty"`
-	Scheme                 string                           `json:"scheme,omitempty"`
-	DefaultResponse        interface{}                      `json:"defaultresponse,omitempty"`
-	LbDeleteStatus         string                           `json:"lbdeletestatus,omitempty"`
-	ClassicLb              []LoadBalanceResponse            `json:"classiclb,omitempty"`
+	// Name refers to the name of the loadbalancer of which the information has to be retrived.
+	Name string `json:"name,omitempty"`
+	// Type are the type of loadbalancer required ex: classic, application etc.
+	Type string `json:"type,omitempty"`
+	// LbDns is the DNS associated to the loadbalancer created/retrived.
+	LbDns string `json:"lbdns,omitempty"`
+	// LbArn is the ARN value associated to the loadbalancer created/retrived.
+	LbArn string `json:"lbarn,omitempty"`
+	// LbArns are the array of ARN value associated to the loadbalancer created/retrived.
+	LbArns []string `json:"lbarns,omitempty"`
+	// TargetArn refers to the ARN value associated to the target group part of loadbalancer.
+	TargetArn interface{} `json:"targetarn,omitempty"`
+	// ListnerArn refers to the ARN value associated to the listner group part of loadbalancer.
+	ListnerArn interface{} `json:"listnerarn,omitempty"`
+	// Createdon refers to the date on which the loadbalancer is created.
+	Createdon string `json:"createdon,omitempty"`
+	// VpcId is the ID of the network of which the loadbalancer is part of.
+	VpcId string `json:"vpcid,omitempty"`
+	// Scheme is to select the catageory of loadbalancer ex: internal, internet-facing. If not mentioned internet-facing will be created by default.
+	Scheme          string      `json:"scheme,omitempty"`
+	DefaultResponse interface{} `json:"defaultresponse,omitempty"`
+	LbDeleteStatus  string      `json:"lbdeletestatus,omitempty"`
+	// ClassicLb has the responses of classic loadbalancer.
+	ClassicLb []LoadBalanceResponse `json:"classiclb,omitempty"`
+	// ApplicationLb has the responses of application loadbalancer.
 	ApplicationLb          []LoadBalanceResponse            `json:"applicationlb,omitempty"`
 	CreateClassicLbRaw     *elb.CreateLoadBalancerOutput    `json:"createclassiclbraw,omitempty"`
 	GetClassicLbsRaw       *elb.DescribeLoadBalancersOutput `json:"getclassiclbsraw,omitempty"`

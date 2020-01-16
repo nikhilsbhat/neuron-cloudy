@@ -11,29 +11,48 @@ import (
 
 // NetworkCreateInput will implement almost all the creation of network and its components under cloud/operations.
 type NetworkCreateInput struct {
-	VpcCidr  string   `json:"vpccidr"`
+	// VpcCidr would be the CIDR bolck for the network that would be created.
+	VpcCidr string `json:"vpccidr"`
+	// SubCidrs would be the list of CIDR bolcks for the subnetworks that would be created.
 	SubCidrs []string `json:"subcidrs"`
-	SubCidr  string   `json:"subcidr"`
-	Name     string   `json:"name"`
-	Type     string   `json:"type"`
-	Ports    []string `json:"ports"`
-	Zone     string   `json:"zone"`
-	VpcId    string   `json:"vpcid"`
-	IgwId    string   `json:"igwid"`
-	GetRaw   bool     `json:"getraw"`
+	// SubCidr would be the CIDR bolck for the subnetwork that would be created.
+	SubCidr string `json:"subcidr"`
+	// Name of the network that would be created.
+	Name string `json:"name"`
+	// Type of network to be created ex: public, private.
+	Type string `json:"type"`
+	// Ports to be opened on the network that would be created.
+	Ports []string `json:"ports"`
+	// Zone name in which the network has to reside.
+	Zone string `json:"zone"`
+	// VpcId refers to the ID of the network in which the subnet should be created.
+	VpcId string `json:"vpcid"`
+	// IgwId refers to the ID of the internet gateway which should be updated/deleted.
+	IgwId  string `json:"igwid"`
+	GetRaw bool   `json:"getraw"`
 }
 
 // NetworkResponse will be the response type of almost all the network related activities under cloud/operations.
 type NetworkResponse struct {
-	Name                  string                              `json:"name,omitempty"`
-	VpcId                 string                              `json:"vpcid,omitempty"`
-	Subnets               []SubnetReponse                     `json:"subnets,omitempty"`
-	Vpcs                  []VpcResponse                       `json:"vpcs,omitempty"`
-	Type                  string                              `json:"type,omitempty"`
-	State                 string                              `json:"state,omitempty"`
-	IgwId                 string                              `json:"igw,omitempty"`
-	IsDefault             bool                                `json:"isdefault,omitempty"`
-	SecGroupIds           []string                            `json:"secgroupid,omitempty"`
+	// Name of the network/subnetwork that would be creted/updated/deleted.
+	Name string `json:"name,omitempty"`
+	// VpcId refers to the ID of network/subnetwork that would be creted/updated/deleted.
+	VpcId string `json:"vpcid,omitempty"`
+	// Subnets holds the response which was obtained as part of subnetwork cretion/updation/deletion.
+	Subnets []SubnetReponse `json:"subnets,omitempty"`
+	// Vpcs holds the response which was obtained as part of network cretion/updation/deletion.
+	Vpcs []VpcResponse `json:"vpcs,omitempty"`
+	// Type of the network/subnetwork that has to be creted/updated/deleted.
+	Type string `json:"type,omitempty"`
+	// State refers to current state of the network would be creted/updated/deleted.
+	State string `json:"state,omitempty"`
+	// IgwId refers to the ID of internet gateway that would be creted/updated/deleted.
+	IgwId string `json:"igw,omitempty"`
+	// IsDefault will define if the network/subnetwork or its components are pre created.
+	IsDefault bool `json:"isdefault,omitempty"`
+	// SecGroupIds are the list of security groups IDs that is associated with the network/subnetwork.
+	SecGroupIds []string `json:"secgroupid,omitempty"`
+	// Region name in which the network/subnetwork or its component were created.
 	Region                string                              `json:"region,omitempty"`
 	GetVpcsRaw            *ec2.DescribeVpcsOutput             `json:"getvpcsraw,omitempty"`
 	GetVpcRaw             *ec2.Vpc                            `json:"getvpcraw,omitempty"`
@@ -49,29 +68,43 @@ type NetworkResponse struct {
 
 // DeleteNetworkInput will implement almost all the deletion of network and its components under cloud/operations.
 type DeleteNetworkInput struct {
-	VpcIds        []string `json:"region"`
-	SubnetIds     []string `json:"vpcids"`
-	SecIds        []string `json:"secids"`
-	IgwIds        []string `json:"igwid"`
+	// VpcIds are the list of network IDs that would be deleted.
+	VpcIds []string `json:"region"`
+	// SubnetIds are the list of subnetwork IDs that would be deleted.
+	SubnetIds []string `json:"vpcids"`
+	// SecIds are the list of security group IDs that would be deleted.
+	SecIds []string `json:"secids"`
+	// IgwIds are the list of internet gateway IDs that would be deleted.
+	IgwIds []string `json:"igwid"`
+	// RouteTableIds are the list of routetable that are associated with subnetwork and has to be deleted.
 	RouteTableIds []string `json:"routetableids"`
 	GetRaw        bool     `json:"getraw"`
 }
 
 // GetNetworksInput will implement almost all the methods of fetching network and its components under cloud/operations.
 type GetNetworksInput struct {
-	VpcIds    []string `json:"vpcids"`
+	// VpcIds are the list of network IDs of which the information has to be retrived.
+	VpcIds []string `json:"vpcids"`
+	// SubnetIds are the list of subnetwork IDs of which the information has to be retrived.
 	SubnetIds []string `json:"subnetids"`
-	Filters   Filters  `json:"filters"`
-	Region    string   `json:"region"`
-	GetRaw    bool     `json:"getraw"`
+	// Filters could be applied in the resource to get more refined response.
+	Filters Filters `json:"filters"`
+	// Region name to which network/subnetwork belongs to.
+	Region string `json:"region"`
+	GetRaw bool   `json:"getraw"`
 }
 
 // DeleteNetworkResponse will be the response type of almost all the network and its components while terminating them.
 type DeleteNetworkResponse struct {
-	Subnets         string `json:"subnets,omitempty"`
-	SecurityGroups  string `json:"securities,omitempty"`
-	Routetables     string `json:"routetables,omitempty"`
-	Gateways        string `json:"gateways,omitempty"`
+	// Subnets holds the response on the status of subnetwork deleted.
+	Subnets string `json:"subnets,omitempty"`
+	// SecurityGroups holds the response on the status of security groups deleted.
+	SecurityGroups string `json:"securities,omitempty"`
+	// Routetables holds the response on the status of routetables deleted.
+	Routetables string `json:"routetables,omitempty"`
+	// Gateways holds the response on the status of internet gateways deleted.
+	Gateways string `json:"gateways,omitempty"`
+	// Vpcs holds the response on the status of network deleted.
 	Vpcs            string `json:"vpcs,omitempty"`
 	DefaultResponse string `json:"defaultresponse,omitempty"`
 	Status          string `json:"status,omitempty"`
@@ -79,10 +112,13 @@ type DeleteNetworkResponse struct {
 
 // UpdateNetworkInput will implement the methods that will update the network and its components under cloud/operations.
 type UpdateNetworkInput struct {
-	Resource string             `json:"resource"`
-	Network  NetworkCreateInput `json:"network"`
-	Action   string             `json:"action"`
-	GetRaw   bool               `json:"getRaw"`
+	// Resource name which has to be updated.
+	Resource string `json:"resource"`
+	// Network collects the input for creation of network.
+	Network NetworkCreateInput `json:"network"`
+	// Action to be performed on the resource selected.
+	Action string `json:"action"`
+	GetRaw bool   `json:"getRaw"`
 }
 
 // Filters will help one to have a hold on the call that they make, will help to filter the quiries.

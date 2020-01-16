@@ -10,25 +10,28 @@ import (
 
 // DeleteLoadbalancerInput will values enough to delete a loadbalancer
 type DeleteLoadbalancerInput struct {
-
-	//optional parameter; The name of the loadbalancers which has to be deleted (only classic/network kind of loadbalancers) one can omit this if he/she needs to delete application loadbalncers.
+	// LbNames are name of the loadbalancers which has to be deleted (only classic/network kind of loadbalancers) one can omit this if he/she needs to delete application loadbalncers.
+	// optional parameter;
 	LbNames []string `json:"LbDns,omitempty"`
-
-	//optional parameter; The ARN's of the loadbalancers which has to be deleted (only application kind of loadbalancers) one can omit this if he/she needs to delete classic/network loadbalncers.
+	// LbArns are the ARN's of the loadbalancers which has to be deleted (only application kind of loadbalancers) one can omit this if he/she needs to delete classic/network loadbalncers.
+	// optional parameter;
 	LbArns []string `json:"LbArn,omitempty"`
-
-	//mandatory parameter; Type of loadbalancers to delete the appropriate one (classic/application).
+	// Type of loadbalancers to delete the appropriate one (classic/application).
+	// mandatory parameter;
 	Type string `json:"LbArns,omitempty"`
-
-	//optional parameter; Only when you need unfiltered result from cloud, enable this field by setting it to true. By default it is set to false.
+	// GetRaw returns unfiltered response from the cloud if it is set to true.
+	// optional parameter;
 	GetRaw bool `json:"GetRaw"`
 }
 
-// LoadBalanceDeleteResponse contains filtered/unfiltered response obtained from DeleteLoadbalancer
+// LoadBalanceDeleteResponse contains filtered/unfiltered response obtained from DeleteLoadbalancer.
 type LoadBalanceDeleteResponse struct {
+	// LbDeleteStatus holds the status on loadbalancer deletion.
 	LbDeleteStatus string `json:"LbDeleteStatus,omitempty"`
-	LbArn          string `json:"LbArn,omitempty"`
-	LbName         string `json:"LbName,omitempty"`
+	// LbArns is the ARN of the loadbalancers which has to be deleted/created/retrived.
+	LbArn string `json:"LbArn,omitempty"`
+	// LbNames is name of the loadbalancers which has to be deleted/created/retrived.
+	LbName string `json:"LbName,omitempty"`
 }
 
 // DeleteLoadbalancer is actually responsible for deleting loadbalancer asper the details passed to it.

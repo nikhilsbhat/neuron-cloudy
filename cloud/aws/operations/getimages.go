@@ -6,9 +6,11 @@ import (
 
 // GetImageInput can hold all the required details for fecthing the details of image
 type GetImageInput struct {
-	Kind     string   `json:"Kind"`
+	Kind string `json:"Kind"`
+	// ImageIds are the list of image IDs of which the information has to be retrived.
 	ImageIds []string `json:"ImageIds"`
-	GetRaw   bool     `json:"GetRaw"`
+	// GetRaw returns unfiltered response from the cloud if it is set to true.
+	GetRaw bool `json:"GetRaw"`
 }
 
 // GetImage will fetch the details of the images, who's Id is passed to it.
