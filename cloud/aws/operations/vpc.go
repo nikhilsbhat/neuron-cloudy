@@ -10,12 +10,19 @@ import (
 
 // VpcResponse is a struct that will be the response type of almost all the VPC related activities under cloud/operations.
 type VpcResponse struct {
-	Name              string                           `json:"Name,omitempty"`
-	Type              string                           `json:"Type,omitempty"`
-	VpcId             string                           `json:"VpcId,omitempty"`
-	IgwId             string                           `json:"IgwId,omitempty"`
-	SecGroupIds       []string                         `json:"SecGroupId,omitempty"`
-	IsDefault         bool                             `json:"IsDefault,omitempty"`
+	// Name of the network created/updated/retrived.
+	Name string `json:"Name,omitempty"`
+	// Type of the network created/updated/retrived ex: public, private.
+	Type string `json:"Type,omitempty"`
+	// VpcId refers to the ID of the network created/updated/retrived.
+	VpcId string `json:"VpcId,omitempty"`
+	// IgwId refers to the ID of the internet gateway created/updated/retrived as part of vpc activity.
+	IgwId string `json:"IgwId,omitempty"`
+	// SecGroupIds is the list of security groups IDs which are part of network created/updated/retrived.
+	SecGroupIds []string `json:"SecGroupId,omitempty"`
+	// IsDefault is set true if the network was pre-created by AWS.
+	IsDefault bool `json:"IsDefault,omitempty"`
+	// State of the network ex: pending,deleted and etc.
 	State             string                           `json:"State,omitempty"`
 	CreateVpcRaw      *ec2.CreateVpcOutput             `json:"CreateVpcRaw,omitempty"`
 	GetVpcRaw         *ec2.DescribeVpcsOutput          `json:"GetVpcRaw,omitempty"`

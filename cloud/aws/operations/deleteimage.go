@@ -7,6 +7,7 @@ import (
 
 // DeleteImageInput holds the required value terminate image and implements DeleteImage for the same.
 type DeleteImageInput struct {
+	// ImageIds holds the IDs of the images which has to be deleted.
 	ImageIds []string
 }
 

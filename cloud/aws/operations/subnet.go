@@ -9,9 +9,13 @@ import (
 
 // SubnetReponse is a struct that will be the response type of almost all the subnet related activities under cloud/operations.
 type SubnetReponse struct {
-	Name            string                     `json:"Name,omitempty"`
-	Id              string                     `json:"Id,omitempty"`
-	State           string                     `json:"State,omitempty"`
+	// Name of the subnetwork created/updated/retrived.
+	Name string `json:"Name,omitempty"`
+	// Id of the subnetwork created/updated/retrived.
+	Id string `json:"Id,omitempty"`
+	// State of the subnetwork ex: pending,deleted and etc.
+	State string `json:"State,omitempty"`
+	// VpcId refers to an Id of network of which subnetwork is part of.
 	VpcId           string                     `json:"VpcId,omitempty"`
 	CreateSubnetRaw *ec2.CreateSubnetOutput    `json:"CreateSubnetRaw,omitempty"`
 	GetSubnetRaw    *ec2.DescribeSubnetsOutput `json:"GetSubnetRaw,omitempty"`

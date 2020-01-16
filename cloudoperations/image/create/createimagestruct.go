@@ -7,6 +7,7 @@ import (
 // CreateImageInput takes the required parameters for creating image.
 // These parameters vary based on cloud choosed.
 type CreateImageInput struct {
+	// InstanceIds are the list of instance IDs of which an image would be captured.
 	InstanceIds []string `json:"instanceids"`
 	Cloud       cmn.Cloud
 }

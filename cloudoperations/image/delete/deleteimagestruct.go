@@ -7,6 +7,7 @@ import (
 // DeleteImageInput takes the required parameters for deleting images.
 // These parameters vary based on cloud choosed.
 type DeleteImageInput struct {
+	// ImageIds are the list of image IDs which has to be deleted.
 	ImageIds []string `json:"imageids"`
 	Cloud    cmn.Cloud
 }

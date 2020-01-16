@@ -15,10 +15,8 @@ import (
 type UpdateNetworkResponse struct {
 	// Contains filtered/unfiltered response of AWS.
 	AwsResponse awsnetwork.NetworkResponse `json:"AwsResponse,omitempty"`
-
 	// Contains filtered/unfiltered response of Azure.
 	AzureResponse string `json:"AzureResponse,omitempty"`
-
 	// Default response if no inputs or matching the values required.
 	DefaultResponse string `json:"DefaultResponse,omitempty"`
 }

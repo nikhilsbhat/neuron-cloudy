@@ -8,7 +8,9 @@ import (
 
 // DeleteServerInput will implement the methods to delete servers/vm and other related activities.
 type DeleteServerInput struct {
-	VpcId       string
+	// VpcId of the instance which has to be deleted.
+	VpcId string
+	// InstanceIds are the list of instances which has to deleted.
 	InstanceIds []string
 	GetRaw      bool
 }

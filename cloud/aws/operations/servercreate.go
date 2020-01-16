@@ -11,44 +11,68 @@ import (
 
 // CreateServerInput will implement the methods for creating instances and holds the value for the same.
 type CreateServerInput struct {
+	// InstanceName refers to the name of the instance that has to be created.
 	InstanceName string
-	ImageId      string
+	// ImageId refers to the ID of the image which has to be considered while instance cretion.
+	ImageId string
+	// InstanceType defines the type of the instance that has to be provisioned ex: t2.micro, t2.medium etc.
 	InstanceType string
-	KeyName      string
-	MaxCount     int64
-	MinCount     int64
-	SubnetId     string
-	SecGroupId   string
-	UserData     string
-	AssignPubIp  bool
-	GetRaw       bool
+	// KeyName refers to the name of the key value pair which has to be assossiated with the Instance provisioned.
+	KeyName string
+	// MaxCount defines the maximum number of instances that has to be provisioned.
+	MaxCount int64
+	// MinCount defines the minimum number of instances that has to be provisioned it defaults to 1.
+	MinCount int64
+	// SubnetId is the ID of the subnetwork in which the instance has to be provisioned.
+	SubnetId string
+	// SecGroupId is the ID of the security group which has to be assossiated with the Instance provisioned.
+	SecGroupId string
+	// UserData that has to be passed to the instance while it is provisioned, this is optional.
+	UserData string
+	// AssignPubIp assignes public IP to VMs if it is set. This makes instance opened to world.
+	AssignPubIp bool
+	GetRaw      bool
 }
 
 // ServerResponse holds the filtered/unfiltered output of CreateServer from aws.
 type ServerResponse struct {
-	InstanceName        string                        `json:"InstanceName,omitempty"`
-	InstanceId          string                        `json:"InstanceId,omitempty"`
-	SubnetId            string                        `json:"SubnetId,omitempty"`
-	PrivateIpAddress    string                        `json:"IpAddress,omitempty"`
-	PublicIpAddress     string                        `json:"PublicIpAddress,omitempty"`
-	PrivateDnsName      string                        `json:"PrivateDnsName,omitempty"`
-	CreatedOn           string                        `json:"CreatedOn,omitempty"`
-	State               string                        `json:"State,omitempty"`
-	InstanceDeleteState string                        `json:"InstanceDeleteState,omitempty"`
-	InstanceType        string                        `json:"InstanceType,omitempty"`
-	Cloud               string                        `json:"Cloud,omitempty"`
-	Region              string                        `json:"Region,omitempty"`
-	PreviousState       string                        `json:"PreviousState,omitempty"`
-	CurrentState        string                        `json:"CurrentState,omitempty"`
-	DefaultResponse     interface{}                   `json:"DefaultResponse,omitempty"`
-	Error               error                         `json:"Error,omitempty"`
-	CreateInstRaw       *ec2.DescribeInstancesOutput  `json:"CreateInstRaw,omitempty"`
-	GetInstRaw          *ec2.DescribeInstancesOutput  `json:"DescribeInstRaw,omitempty"`
-	DeleteInstRaw       *ec2.TerminateInstancesOutput `json:"DeleteInstRaw,omitempty"`
-	StartInstRaw        *ec2.StartInstancesOutput     `json:"StartInstRaw,omitempty"`
-	StopInstRaw         *ec2.StopInstancesOutput      `json:"StopInstRaw,omitempty"`
-	CreateImgRaw        *ec2.CreateImageOutput        `json:"CreateImgRaw,omitempty"`
-	DescribeImg         *ec2.DescribeImagesOutput     `json:"DescribeImg,omitempty"`
+	// InstanceName refers to the name of the instance that was created/deleted/updated/retrived.
+	InstanceName string `json:"InstanceName,omitempty"`
+	// InstanceId refers to the ID of the instance that was created/deleted/updated/retrived.
+	InstanceId string `json:"InstanceId,omitempty"`
+	// InstanceId refers to the ID of the subnetwork in which the instance was created/deleted/updated/retrived.
+	SubnetId string `json:"SubnetId,omitempty"`
+	// PrivateIpAddress holds the private IP address assigned to the instance.
+	PrivateIpAddress string `json:"IpAddress,omitempty"`
+	// PublicIpAddress holds the public IP address assigned to the instance.
+	PublicIpAddress string `json:"PublicIpAddress,omitempty"`
+	// PrivateDnsName holds the private DNS assigned to the instance.
+	PrivateDnsName string `json:"PrivateDnsName,omitempty"`
+	// CreatedOn holds the information on the time when the instance was created.
+	CreatedOn string `json:"CreatedOn,omitempty"`
+	// State of the instance created/deleted/updated/retrived.
+	State string `json:"State,omitempty"`
+	// InstanceDeleteState states whether the instance is deleted successfully.
+	InstanceDeleteState string `json:"InstanceDeleteState,omitempty"`
+	// InstanceType refes to the type of instance which was created/deleted/updated/retrived ex: t2.micro,t2.medium.
+	InstanceType string `json:"InstanceType,omitempty"`
+	// Cloud name to which the instance belongs.
+	Cloud string `json:"Cloud,omitempty"`
+	// Region in which the instance present.
+	Region string `json:"Region,omitempty"`
+	// PreviousState defines the state of instance prior to which information is retrived.
+	PreviousState string `json:"PreviousState,omitempty"`
+	// CurrentState of the instance of which information is retrived.
+	CurrentState    string                        `json:"CurrentState,omitempty"`
+	DefaultResponse interface{}                   `json:"DefaultResponse,omitempty"`
+	Error           error                         `json:"Error,omitempty"`
+	CreateInstRaw   *ec2.DescribeInstancesOutput  `json:"CreateInstRaw,omitempty"`
+	GetInstRaw      *ec2.DescribeInstancesOutput  `json:"DescribeInstRaw,omitempty"`
+	DeleteInstRaw   *ec2.TerminateInstancesOutput `json:"DeleteInstRaw,omitempty"`
+	StartInstRaw    *ec2.StartInstancesOutput     `json:"StartInstRaw,omitempty"`
+	StopInstRaw     *ec2.StopInstancesOutput      `json:"StopInstRaw,omitempty"`
+	CreateImgRaw    *ec2.CreateImageOutput        `json:"CreateImgRaw,omitempty"`
+	DescribeImg     *ec2.DescribeImagesOutput     `json:"DescribeImg,omitempty"`
 }
 
 // CreateServer will help in creating instances/vms with the configuration passed.
