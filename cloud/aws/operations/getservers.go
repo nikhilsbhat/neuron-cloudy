@@ -11,9 +11,9 @@ import (
 type DescribeInstanceInput struct {
 	// InstanceIds are the list of instance IDs of which the information has to be fetched.
 	InstanceIds []string
-	// VpcIds are the list of network IDs of which the instance details has to be retrived.
+	// VpcIds are the list of network IDs of which the instance details has to be retrieved.
 	VpcIds []string
-	// SubnetIds are the list of subnet-network IDs of which the instance details has to be retrived.
+	// SubnetIds are the list of subnet-network IDs of which the instance details has to be retrieved.
 	SubnetIds []string
 	// Filters can be applied on the instance to get granular details.
 	Filters Filters

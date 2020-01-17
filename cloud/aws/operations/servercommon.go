@@ -9,16 +9,16 @@ import (
 
 // CommonComputeInput implements methods to perform common actions against instances.
 type CommonComputeInput struct {
-	// InstanceIds are the list of instances of which information has to be retrived.
+	// InstanceIds are the list of instances of which information has to be retrieved.
 	InstanceIds []string
-	// VpcId of the instance which has to be retrived.
+	// VpcId of the instance which has to be retrieved.
 	VpcId  string
 	GetRaw bool
 }
 
 // CommonComputeResponse contains the filtered/unfiletred output of instances from aws.
 type CommonComputeResponse struct {
-	// InstanceIds are the list of instances which was retrived.
+	// InstanceIds are the list of instances which was retrieved.
 	InstanceIds []string                     `json:"InstanceIds,omitempty"`
 	GetInstRaw  *ec2.DescribeInstancesOutput `json:"DescribeInstRaw,omitempty"`
 }

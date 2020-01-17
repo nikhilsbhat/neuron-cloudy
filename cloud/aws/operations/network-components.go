@@ -13,13 +13,13 @@ import (
 type NetworkComponentInput struct {
 	// Name the network/subnetwork component ot be created.
 	Name string `json:"name"`
-	// VpcIds are the IDs of the network of which the components has to be created/updated/retrived.
+	// VpcIds are the IDs of the network of which the components has to be created/updated/retrieved.
 	VpcIds []string `json:"vpcid"`
-	// SubId is the ID of the subnetwork of which the components has to be created/updated/retrived.
+	// SubId is the ID of the subnetwork of which the components has to be created/updated/retrieved.
 	SubId string `json:"subid"`
-	// IgwId refers to the ID of internet gateway of which the components has to be created/updated/retrived.
+	// IgwId refers to the ID of internet gateway of which the components has to be created/updated/retrieved.
 	IgwId string `json:"igwid"`
-	// gwId refers to the IDs of internet gateway of which the components has to be created/updated/retrived.
+	// gwId refers to the IDs of internet gateway of which the components has to be created/updated/retrieved.
 	IgwIds []string `json:"igwids"`
 	// SubType defines the type of subnetwork ex: public, private.
 	SubType string `json:"subtype"`
@@ -27,9 +27,9 @@ type NetworkComponentInput struct {
 	Ports []string `json:"ports"`
 	// Filters can be applied on the resource to get more relevant details.
 	Filters Filters `json:"filters"`
-	// SecGroupIds are the list of security group ID's of which the information has to be created/updated/retrived.
+	// SecGroupIds are the list of security group ID's of which the information has to be created/updated/retrieved.
 	SecGroupIds []string `json:"secgroupids"`
-	// RouteTableIds are the list of route table ID's of which the information has to be created/updated/retrived.
+	// RouteTableIds are the list of route table ID's of which the information has to be created/updated/retrieved.
 	RouteTableIds []string `json:"routetableids"`
 	// DestinationCidr is the CIDR block which has to opened for routetable.
 	DestinationCidr string `json:"destinationcidr"`
@@ -38,11 +38,11 @@ type NetworkComponentInput struct {
 
 // NetworkComponentResponse will be the response type of almost all the network components related activities under cloud/operations.
 type NetworkComponentResponse struct {
-	// IgwIds are the IDs of the internet gateways that was created/updated/retrived.
+	// IgwIds are the IDs of the internet gateways that was created/updated/retrieved.
 	IgwIds []string `json:"IgwId,omitempty"`
-	// SecGroupIds are the IDs of the security groups that was created/updated/retrived.
+	// SecGroupIds are the IDs of the security groups that was created/updated/retrieved.
 	SecGroupIds []string `json:"SecGroupIds,omitempty"`
-	// RouteTableIds are the IDs of the route table that was created/updated/retrived.
+	// RouteTableIds are the IDs of the route table that was created/updated/retrieved.
 	RouteTableIds     []string                            `json:"RouteTableIds,omitempty"`
 	CreateIgwRaw      *ec2.CreateInternetGatewayOutput    `json:"CreateIgwRaw,omitempty"`
 	GetIgwRaw         *ec2.DescribeInternetGatewaysOutput `json:"GetIgwRaw,omitempty"`

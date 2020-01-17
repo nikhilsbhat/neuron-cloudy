@@ -25,7 +25,7 @@ type Tag struct {
 
 // CommonInput Implements GetAvailabilityZones, GetRegions, GetRegionFromAvail and GetUniqueNumberFromTags
 type CommonInput struct {
-	// AvailabilityZone is the zone name of cloud aws of which information has to be retrived.
+	// AvailabilityZone is the zone name of cloud aws of which information has to be retrieved.
 	AvailabilityZone string
 	// SortInput takes an array sorts it and returns sorted value.
 	SortInput []string
@@ -35,7 +35,7 @@ type CommonInput struct {
 
 // CommonResponse holds the responses form the methods implemented by above structure
 type CommonResponse struct {
-	// Regions holds an array of the region names retrived.
+	// Regions holds an array of the region names retrieved.
 	Regions       []string `json:"Regions,omitempty"`
 	GetRegionsRaw *ec2.DescribeRegionsOutput
 }

@@ -18,13 +18,13 @@ type GetNetworkInput struct {
 
 // NetworkResponse contains filtered/unfiltered response from GCP on cluster details.
 type NetworkResponse struct {
-	// Name refers to the name of the network of which the information is retrived.
+	// Name refers to the name of the network of which the information is retrieved.
 	Name string
 	// IPv4Range refers to the range of IP address assogned to the particluar network.
 	IPv4Range string
 	// ID meaning the unique ID assgned to the network.
 	ID uint64
-	// Subnetworks holds the list of subnetworks present in the retrived network.
+	// Subnetworks holds the list of subnetworks present in the retrieved network.
 	Subnetworks []string
 	// AutoCreateSubnetworks defines whether to create subnets automatically in a particular network.
 	AutoCreateSubnetworks bool
@@ -34,7 +34,7 @@ type NetworkResponse struct {
 	Peerings []*compute.NetworkPeering
 	// RoutingConfig holds the information of router attached to the network.
 	RoutingConfig *compute.NetworkRoutingConfig
-	// SelfLink holds the link which refers to a particluar network of which the information retrived.
+	// SelfLink holds the link which refers to a particluar network of which the information retrieved.
 	SelfLink string
 	// GetNetworkRaw contains unfiltered response from GCP on network
 	GetNetworkRaw []*compute.Network

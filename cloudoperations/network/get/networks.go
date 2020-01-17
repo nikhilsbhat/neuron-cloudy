@@ -14,7 +14,7 @@ type GetNetworksInput struct {
 	SubnetIds []string `json:"subnetids"`
 	// ProjectID refers to the ID of the project in which the selected resource exists.
 	ProjectID string
-	// NetworkID refers to the name/id of the network of which the information has to be retrived.
+	// NetworkID refers to the name/id of the network of which the information has to be retrieved.
 	NetworkID []string `json:"networkid"`
 	Cloud     cmn.Cloud
 }

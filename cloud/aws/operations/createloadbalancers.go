@@ -12,14 +12,14 @@ import (
 // LoadBalanceCreateInput implements CreateLoadBalancer to create loadbalancer.
 // It has various parameter which helps in taking decision for creating loabalancer and other aspects of it.
 type LoadBalanceCreateInput struct {
-	// Name refers to the name of the loadbalancer to be created or of which the information to be retrived.
+	// Name refers to the name of the loadbalancer to be created or of which the information to be retrieved.
 	// optional parameter; If you provide the name to the loadbalancer well and good, else we will name it with a default one.
 	Name string
 	// VpcId is the ID of the network of which the loadbalancer is part of.
 	// optional parameter; The Id of vpc in which the loadbalancer has to be created. Use this only if you don't want to pass subnets directly.
 	// once this option is used we automatically fetch the random subnets from this network.
 	VpcId string
-	// SubnetIds is an array of subnetworks which wpuld be part of the network retrived.
+	// SubnetIds is an array of subnetworks which wpuld be part of the network retrieved.
 	// optional parameter;
 	SubnetIds []string
 	// AvailabilityZones is an array of availability zones to which loadbalancers has to be tagged.
@@ -65,15 +65,15 @@ type LoadBalanceCreateInput struct {
 // LoadBalanceResponse is the output format of CreateLoadBalancer, this holds both filetered and unfiletred response from cloud.
 // But one has to enable flag 'GetRaw' in LoadBalanceCreateInput to get unfiletred output.
 type LoadBalanceResponse struct {
-	// Name refers to the name of the loadbalancer of which the information has to be retrived.
+	// Name refers to the name of the loadbalancer of which the information has to be retrieved.
 	Name string `json:"name,omitempty"`
 	// Type are the type of loadbalancer required ex: classic, application etc.
 	Type string `json:"type,omitempty"`
-	// LbDns is the DNS associated to the loadbalancer created/retrived.
+	// LbDns is the DNS associated to the loadbalancer created/retrieved.
 	LbDns string `json:"lbdns,omitempty"`
-	// LbArn is the ARN value associated to the loadbalancer created/retrived.
+	// LbArn is the ARN value associated to the loadbalancer created/retrieved.
 	LbArn string `json:"lbarn,omitempty"`
-	// LbArns are the array of ARN value associated to the loadbalancer created/retrived.
+	// LbArns are the array of ARN value associated to the loadbalancer created/retrieved.
 	LbArns []string `json:"lbarns,omitempty"`
 	// TargetArn refers to the ARN value associated to the target group part of loadbalancer.
 	TargetArn interface{} `json:"targetarn,omitempty"`

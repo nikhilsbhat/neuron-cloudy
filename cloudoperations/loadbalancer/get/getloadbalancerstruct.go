@@ -6,11 +6,11 @@ import (
 
 // GetLoadbalancerInput takes all the required inputs for fetching the details of the loadbalancers.
 type GetLoadbalancerInput struct {
-	// LbNames refers to the list of loadbalancer names of which the information has to be retrived.
+	// LbNames refers to the list of loadbalancer names of which the information has to be retrieved.
 	LbNames []string `json:"lbnames"`
-	// LbArns refers to the list of ARN values of the loadbalancer has to be retrived.
+	// LbArns refers to the list of ARN values of the loadbalancer has to be retrieved.
 	LbArns []string `json:"lbarns"`
-	// Type refers to the type of loadbalancer of which the information has to be retrived.
+	// Type refers to the type of loadbalancer of which the information has to be retrieved.
 	Type  string `json:"type"`
 	Cloud cmn.Cloud
 }

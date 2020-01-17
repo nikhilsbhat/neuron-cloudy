@@ -9,9 +9,9 @@ import (
 
 // SubnetReponse is a struct that will be the response type of almost all the subnet related activities under cloud/operations.
 type SubnetReponse struct {
-	// Name of the subnetwork created/updated/retrived.
+	// Name of the subnetwork created/updated/retrieved.
 	Name string `json:"Name,omitempty"`
-	// Id of the subnetwork created/updated/retrived.
+	// Id of the subnetwork created/updated/retrieved.
 	Id string `json:"Id,omitempty"`
 	// State of the subnetwork ex: pending,deleted and etc.
 	State string `json:"State,omitempty"`

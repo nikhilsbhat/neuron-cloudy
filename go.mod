@@ -9,9 +9,7 @@ require (
 	github.com/aws/aws-sdk-go v1.21.7
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/go-cmp v0.3.0 // indirect
-	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/nikhilsbhat/config v0.0.0-20191122122325-7cd0985a0270
-	github.com/nikhilsbhat/neuron v0.0.0-20191005183010-c891ed9d85ea
 	github.com/stretchr/testify v1.3.0 // indirect
 	go.opencensus.io v0.20.2 // indirect
 	golang.org/x/net v0.0.0-20190502183928-7f726cade0ab
@@ -20,5 +18,4 @@ require (
 	golang.org/x/text v0.3.2 // indirect
 	google.golang.org/api v0.3.1
 	google.golang.org/grpc v1.19.1 // indirect
-	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 )
