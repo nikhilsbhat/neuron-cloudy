@@ -16,17 +16,17 @@
 // First initilize the client for the appropriate cloud,
 // then invoke an api by passing client while provisioning/deletion/updation/retrival of the cloud services.
 //
-// The doc https://godoc.org/github.com/nikhilsbhat/neuron-cloudy/cloud/session would help in initializing the client for cloudy
-// Ex: GCP
-// session := sess.CreateGcpSessionInput {
-//		CredPath = "path/to/credentials.json"
-// }
+// // The doc https://godoc.org/github.com/nikhilsbhat/neuron-cloudy/cloud/session would help in initializing the client for cloudy:
+//  Ex: GCP
+//  session := sess.CreateGcpSessionInput {
+//  		CredPath = "path/to/credentials.json"
+//  }
 //
-// Ex: AWS
-// session := sess.CreateAwsSessionInput {
-//		KeyId = "KEY_ID_OF_AWS"
-//		AcessKey = "SECRET_ACCESS_KEY_OF_AWS"
-// }
+//  Ex: AWS
+//  session := sess.CreateAwsSessionInput {
+//  		KeyId = "KEY_ID_OF_AWS"
+//  		AcessKey = "SECRET_ACCESS_KEY_OF_AWS"
+//  }
 //
 // Failing to pass the requied parameters while initializing client creates the default session fetching it from environment varibale.
 // More info on what default session can found at [GCP]https://godoc.org/golang.org/x/oauth2/google#DefaultClient and
