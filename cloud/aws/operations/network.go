@@ -83,9 +83,9 @@ type DeleteNetworkInput struct {
 
 // GetNetworksInput will implement almost all the methods of fetching network and its components under cloud/operations.
 type GetNetworksInput struct {
-	// VpcIds are the list of network IDs of which the information has to be retrived.
+	// VpcIds are the list of network IDs of which the information has to be retrieved.
 	VpcIds []string `json:"vpcids"`
-	// SubnetIds are the list of subnetwork IDs of which the information has to be retrived.
+	// SubnetIds are the list of subnetwork IDs of which the information has to be retrieved.
 	SubnetIds []string `json:"subnetids"`
 	// Filters could be applied in the resource to get more refined response.
 	Filters Filters `json:"filters"`
@@ -502,18 +502,13 @@ func (net *GetNetworksInput) GetAllNetworks(con aws.EstablishConnectionInput) ([
 // UpdateNetwork is a customized method for updating the network and its components, if one needs to update the individual components network then this method does just that. For more operations call GOD, interface which talks to cloud.
 func (net *UpdateNetworkInput) UpdateNetwork(con aws.EstablishConnectionInput) (NetworkResponse, error) {
 
-	/*ec2, seserr := con.EstablishConnection()
-	  if seserr != nil {
-	          return NetworkResponse{}, seserr
-	  }*/
-
 	switch strings.ToLower(net.Resource) {
 	case "subnets":
 
 		switch strings.ToLower(net.Action) {
 		case "create":
 			// Collects all the available availability zones
-			zones := make([]string, 0)
+			var zones []string
 			if net.Network.Zone == "" {
 				zonein := CommonInput{}
 				zone, zonerr := zonein.GetAvailabilityZones(con)

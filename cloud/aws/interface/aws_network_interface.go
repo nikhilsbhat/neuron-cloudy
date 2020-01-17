@@ -55,7 +55,7 @@ type DescribeNetworkInput struct {
 	IgwIds []string
 	// VpcIds are the id's of your virtual private cloud/network
 	VpcIds []string
-	// SubnetIds are ther id's of the subnets created within the network.
+	// SubnetIds are the id's of the subnets created within the network.
 	SubnetIds []string
 	// RouteTableIds are the id's of the routetable that are created as part of network creation.
 	RouteTableIds []string
@@ -69,7 +69,7 @@ type DescribeNetworkInput struct {
 func (sess *EstablishedSession) CreateVpc(v *CreateNetworkInput) (*ec2.CreateVpcOutput, error) {
 
 	if sess.Ec2 != nil {
-		if (v.Cidr != "") || (v.Tenancy != "") {
+		if (len(v.Cidr) != 0) || (len(v.Tenancy) != 0) {
 			input := &ec2.CreateVpcInput{
 				CidrBlock:       aws.String(v.Cidr),
 				InstanceTenancy: aws.String(v.Tenancy),

@@ -10,7 +10,7 @@ import (
 
 // CreateServerInput holds all required values to create a server/instance in aws.
 type CreateServerInput struct {
-	// ImageId is the ID of the image of which the information has to be retrived.
+	// ImageId is the ID of the image of which the information has to be retrieved.
 	ImageId string
 	// InstanceType of the the instance that has to be created ex: t2.micro, t2.medium etc.
 	InstanceType string
@@ -32,9 +32,9 @@ type CreateServerInput struct {
 
 // DescribeComputeInput holds all the required values to describe the instance/vm or any compute resources in aws.
 type DescribeComputeInput struct {
-	// InstanceIds are the IDs of the instances of whom the information has to be retrived.
+	// InstanceIds are the IDs of the instances of whom the information has to be retrieved.
 	InstanceIds []string
-	// ImageIds are the IDs of the images of whom the information has to be retrived.
+	// ImageIds are the IDs of the images of whom the information has to be retrieved.
 	ImageIds []string
 	// Filters can be applied on the resource to fetch more appropriate information.
 	Filters Filters

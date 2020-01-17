@@ -36,11 +36,11 @@ type CreateServerInput struct {
 
 // ServerResponse holds the filtered/unfiltered output of CreateServer from aws.
 type ServerResponse struct {
-	// InstanceName refers to the name of the instance that was created/deleted/updated/retrived.
+	// InstanceName refers to the name of the instance that was created/deleted/updated/retrieved.
 	InstanceName string `json:"InstanceName,omitempty"`
-	// InstanceId refers to the ID of the instance that was created/deleted/updated/retrived.
+	// InstanceId refers to the ID of the instance that was created/deleted/updated/retrieved.
 	InstanceId string `json:"InstanceId,omitempty"`
-	// InstanceId refers to the ID of the subnetwork in which the instance was created/deleted/updated/retrived.
+	// InstanceId refers to the ID of the subnetwork in which the instance was created/deleted/updated/retrieved.
 	SubnetId string `json:"SubnetId,omitempty"`
 	// PrivateIpAddress holds the private IP address assigned to the instance.
 	PrivateIpAddress string `json:"IpAddress,omitempty"`
@@ -50,19 +50,19 @@ type ServerResponse struct {
 	PrivateDnsName string `json:"PrivateDnsName,omitempty"`
 	// CreatedOn holds the information on the time when the instance was created.
 	CreatedOn string `json:"CreatedOn,omitempty"`
-	// State of the instance created/deleted/updated/retrived.
+	// State of the instance created/deleted/updated/retrieved.
 	State string `json:"State,omitempty"`
 	// InstanceDeleteState states whether the instance is deleted successfully.
 	InstanceDeleteState string `json:"InstanceDeleteState,omitempty"`
-	// InstanceType refes to the type of instance which was created/deleted/updated/retrived ex: t2.micro,t2.medium.
+	// InstanceType refes to the type of instance which was created/deleted/updated/retrieved ex: t2.micro,t2.medium.
 	InstanceType string `json:"InstanceType,omitempty"`
 	// Cloud name to which the instance belongs.
 	Cloud string `json:"Cloud,omitempty"`
 	// Region in which the instance present.
 	Region string `json:"Region,omitempty"`
-	// PreviousState defines the state of instance prior to which information is retrived.
+	// PreviousState defines the state of instance prior to which information is retrieved.
 	PreviousState string `json:"PreviousState,omitempty"`
-	// CurrentState of the instance of which information is retrived.
+	// CurrentState of the instance of which information is retrieved.
 	CurrentState    string                        `json:"CurrentState,omitempty"`
 	DefaultResponse interface{}                   `json:"DefaultResponse,omitempty"`
 	Error           error                         `json:"Error,omitempty"`

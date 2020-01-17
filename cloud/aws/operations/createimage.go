@@ -19,11 +19,11 @@ type ImageCreateInput struct {
 
 // ImageResponse contains filtered/unfiltered response received from aws.
 type ImageResponse struct {
-	// Name refers to the name of the image captured or retrived.
+	// Name refers to the name of the image captured or retrieved.
 	Name string `json:"Name,omitempty"`
-	// ImageId refers to the ID of the image captured or retrived.
+	// ImageId refers to the ID of the image captured or retrieved.
 	ImageId string `json:"ImageId,omitempty"`
-	// ImageIds refers to an array of IDs of the image captured or retrived.
+	// ImageIds refers to an array of IDs of the image captured or retrieved.
 	ImageIds []string `json:"ImageIds,omitempty"`
 	// State defines the state of image pending/deleted etc.
 	State string `json:"State,omitempty"`
@@ -31,9 +31,9 @@ type ImageResponse struct {
 	IsPublic bool `json:"IsPublic,omitempty"`
 	// CreationDate holds the date of image creation.
 	CreationDate string `json:"CreationDate,omitempty"`
-	// Description describes the image captured/retrived.
+	// Description describes the image captured/retrieved.
 	Description string `json:"Description,omitempty"`
-	// DefaultResponse would be returened if function encounteres unknown circumstances.
+	// DefaultResponse would be returened if function encounters unknown circumstances.
 	DefaultResponse string `json:"DefaultResponse,omitempty"`
 	// DeleteResponse defines the image deletion status.
 	DeleteResponse string `json:"DeleteResponse,omitempty"`
@@ -49,7 +49,7 @@ type ImageResponse struct {
 
 // SnapshotDetails holds the details of snapshot captured such as type disk, size of it and etc.
 type SnapshotDetails struct {
-	// SnapshotId refers to the ID of the snapshot created/associated to the image of which information is retrived.
+	// SnapshotId refers to the ID of the snapshot created/associated to the image of which information is retrieved.
 	SnapshotId string `json:"SnapshotId,omitempty"`
 	// VolumeType defines the volume type of the snapshot created.
 	VolumeType string `json:"VolumeType,omitempty"`

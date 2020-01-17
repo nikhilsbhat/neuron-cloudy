@@ -19,7 +19,7 @@ func isBaseClient(client interface{}) bool {
 }
 
 func getClientFromBase(baseClient interface{}, scope []string) *http.Client {
-	client := new(http.Client)
+	var client *http.Client
 	if isBaseClient(baseClient) {
 		baseclient := (baseClient).(*jwt.Config)
 		baseclient.Scopes = scope

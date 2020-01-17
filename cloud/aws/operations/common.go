@@ -17,7 +17,7 @@ import (
 type Tag struct {
 	// Resource refers to the ID of the aws resource for which the tag has to be creted.
 	Resource string
-	// Name refers to the name that the tag will refered as.
+	// Name refers to the name that the tag will be referred as.
 	Name string
 	// Value refers to the value assigned to the tag to be created.
 	Value string
@@ -25,7 +25,7 @@ type Tag struct {
 
 // CommonInput Implements GetAvailabilityZones, GetRegions, GetRegionFromAvail and GetUniqueNumberFromTags
 type CommonInput struct {
-	// AvailabilityZone is the zone name of cloud aws of which information has to be retrived.
+	// AvailabilityZone is the zone name of cloud aws of which information has to be retrieved.
 	AvailabilityZone string
 	// SortInput takes an array sorts it and returns sorted value.
 	SortInput []string
@@ -35,7 +35,7 @@ type CommonInput struct {
 
 // CommonResponse holds the responses form the methods implemented by above structure
 type CommonResponse struct {
-	// Regions holds an array of the region names retrived.
+	// Regions holds an array of the region names retrieved.
 	Regions       []string `json:"Regions,omitempty"`
 	GetRegionsRaw *ec2.DescribeRegionsOutput
 }

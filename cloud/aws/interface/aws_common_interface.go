@@ -9,7 +9,7 @@ import (
 
 // AwsCommonInput holds the common input values to perform the operations.
 type AwsCommonInput struct {
-	// AvailabilityZone holds the name of the zone who's information has to be retrived.
+	// AvailabilityZone holds the name of the zone who's information has to be retrieved.
 	AvailabilityZone string `json:"AvailabilityZone,omitempty"`
 }
 

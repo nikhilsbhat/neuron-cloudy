@@ -28,9 +28,9 @@ type DeleteLoadbalancerInput struct {
 type LoadBalanceDeleteResponse struct {
 	// LbDeleteStatus holds the status on loadbalancer deletion.
 	LbDeleteStatus string `json:"LbDeleteStatus,omitempty"`
-	// LbArns is the ARN of the loadbalancers which has to be deleted/created/retrived.
+	// LbArns is the ARN of the loadbalancers which has to be deleted/created/retrieved.
 	LbArn string `json:"LbArn,omitempty"`
-	// LbNames is name of the loadbalancers which has to be deleted/created/retrived.
+	// LbNames is name of the loadbalancers which has to be deleted/created/retrieved.
 	LbName string `json:"LbName,omitempty"`
 }
 
