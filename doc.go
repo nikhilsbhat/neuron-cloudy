@@ -29,7 +29,8 @@
 //  }
 //
 // Failing to pass the requied parameters while initializing client creates the default session fetching it from environment varibale.
-// More info on what default session can found at [GCP]https://godoc.org/golang.org/x/oauth2/google#DefaultClient and
-// for [AWS](https://docs.aws.amazon.com/sdk-for-go/api/aws/credentials/#NewEnvCredentials)
+// More info on what default session can found at:
+// [GCP]https://godoc.org/golang.org/x/oauth2/google#DefaultClient
+// [AWS](https://docs.aws.amazon.com/sdk-for-go/api/aws/credentials/#NewEnvCredentials)
 //
 package cloudy
