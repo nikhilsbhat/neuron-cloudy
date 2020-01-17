@@ -33,7 +33,7 @@ type CreateGcpSessionInput struct {
 	ProjectID string
 	// AuthScopes has to be passed based on the resource that was selected to dealt with.
 	AuthScopes []string
-	// CredPath of GCP credentails, the preferred way of initializing client for GCP.
+	// CredPath of GCP credentials, the preferred way of initializing client for GCP.
 	CredPath string
 	// Zone of the resource.
 	Zone string

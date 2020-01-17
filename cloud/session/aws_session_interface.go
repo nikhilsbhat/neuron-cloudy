@@ -99,7 +99,7 @@ func (auth *CreateAwsSessionInput) getAWSClient() (*session.Session, error) {
 }
 
 // getCustomAWSClientFile gets the custom client/session form the custom file fed to cloudy.
-// This is for future refrence currently this does not have role to play.
+// This is for future reference currently this does not have role to play.
 func (auth *CreateAwsSessionInput) getCustomFileAWSClient() (*session.Session, error) {
 
 	if stat := auth.awsCredExists(); stat == false {

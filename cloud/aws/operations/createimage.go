@@ -33,7 +33,7 @@ type ImageResponse struct {
 	CreationDate string `json:"CreationDate,omitempty"`
 	// Description describes the image captured/retrieved.
 	Description string `json:"Description,omitempty"`
-	// DefaultResponse would be returened if function encounteres unknown circumstances.
+	// DefaultResponse would be returened if function encounters unknown circumstances.
 	DefaultResponse string `json:"DefaultResponse,omitempty"`
 	// DeleteResponse defines the image deletion status.
 	DeleteResponse string `json:"DeleteResponse,omitempty"`

@@ -17,7 +17,7 @@ import (
 type Tag struct {
 	// Resource refers to the ID of the aws resource for which the tag has to be creted.
 	Resource string
-	// Name refers to the name that the tag will refered as.
+	// Name refers to the name that the tag will be referred as.
 	Name string
 	// Value refers to the value assigned to the tag to be created.
 	Value string
