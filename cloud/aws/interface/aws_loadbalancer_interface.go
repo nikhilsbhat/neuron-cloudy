@@ -13,24 +13,41 @@ import (
 // LoadBalanceCreateInput implements various methods to create variours types of loadbalancers in aws.
 // It holds all the required values for the same.
 type LoadBalanceCreateInput struct {
-	Name              string
-	VpcId             string
-	Subnets           []string
+	// Name of the loadbalacner that would be created/deleted/updated/retrieved.
+	Name string
+	// VpcId refers to the ID of the network in which loadbalancer would be created/deleted/updated/retrieved.
+	VpcId string
+	// Subnets are the list of subnetworks to which the loadbalancer would be associated.
+	Subnets []string
+	// AvailabilityZones are the list of zones.
 	AvailabilityZones []string
-	SecurityGroups    []string
-	Scheme            string
-	Type              string
-	SslCert           string
-	SslPolicy         string
-	LbPort            int64
-	InstPort          int64
-	Lbproto           string
-	Instproto         string
-	HttpCode          string
-	HealthPath        string
-	IpAddressType     string
-	TargetArn         string
-	LbArn             string
+	// SecurityGroups are the list of security groups
+	SecurityGroups []string
+	// Scheme of the loadbalancer that would be created/deleted/updated/retrieved.
+	Scheme string
+	// Type of the loadbalancer that would be created/deleted/updated/retrieved. Ex: internal, external.
+	Type string
+	// SslCert is the SSL certificate for the loadbalancer.
+	SslCert string
+	// SslPolicy for the loadbalancers.
+	SslPolicy string
+	// LbPort refers to the port at which the loadbalancer should be accessible.
+	LbPort int64
+	// InstPort refers to the port at which the loadbalancer talks to the backend instances.
+	InstPort int64
+	// Lbproto refers to the protocol for the loadbalancer.
+	Lbproto string
+	// Instproto refers to the protocol with which the loadbalancer communicates to backend instances.
+	Instproto string
+	HttpCode  string
+	// HealthPath is the health-check path for the loadbalancer.
+	HealthPath string
+	// IpAddressType is the type of address that should be associated with loadbalancer. Ex: private, public.
+	IpAddressType string
+	// TargetArn is the ARN of the target group that are associated with loadbalancer.
+	TargetArn string
+	// LbArn is the ARN of the loadbalancer that would be created/deleted/updated/retrieved.
+	LbArn string
 }
 
 // LoadBalanceResponse returns the filtered/unfiltered results obtained from aws.
@@ -52,9 +69,13 @@ type LoadBalanceResponse struct {
 
 // DeleteLoadbalancerInput implements various methods to delete various types of load balancers.
 type DeleteLoadbalancerInput struct {
-	LbName      string
-	LbArn       string
-	TargetArn   string
+	// LbName refers to the name of the loadbalancer that would be deleted.
+	LbName string
+	// LbArn refers to the ARN value of the loadbalancer that would be deleted.
+	LbArn string
+	// TargetArn refers to the ARN value of target-group of the loadbalancer that would be deleted.
+	TargetArn string
+	// ListenerArn refers to the ARN value of the listners of the loadbalancer that would be deleted.
 	ListenerArn string
 }
 
