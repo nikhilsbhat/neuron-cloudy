@@ -502,11 +502,6 @@ func (net *GetNetworksInput) GetAllNetworks(con aws.EstablishConnectionInput) ([
 // UpdateNetwork is a customized method for updating the network and its components, if one needs to update the individual components network then this method does just that. For more operations call GOD, interface which talks to cloud.
 func (net *UpdateNetworkInput) UpdateNetwork(con aws.EstablishConnectionInput) (NetworkResponse, error) {
 
-	/*ec2, seserr := con.EstablishConnection()
-	  if seserr != nil {
-	          return NetworkResponse{}, seserr
-	  }*/
-
 	switch strings.ToLower(net.Resource) {
 	case "subnets":
 
