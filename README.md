@@ -30,46 +30,46 @@ This Cloudy rely on dependency injection for the better outcome. As part of this
 
 initializing content for _GCP_ client
 ```golang
-    session := sess.CreateGcpSessionInput {
-		CredPath = "path/to/credentials.json"
-    }
+session := sess.CreateGcpSessionInput {
+    CredPath = "path/to/credentials.json"
+}
 ```
 
 initializing content for _AWS_ client
 ```golang
-    session := sess.CreateAwsSessionInput {
-		KeyId = "KEY_ID_OF_AWS"
-		AcessKey = "SECRET_ACCESS_KEY_OF_AWS"
-    }
+session := sess.CreateAwsSessionInput {
+    KeyId = "KEY_ID_OF_AWS"
+    AcessKey = "SECRET_ACCESS_KEY_OF_AWS"
+}
 ```
 initializing client for the inputs gathered in above step.
 ```golang
-    client, err := session.CreateSession()
-	if err != nil {
-		log.Fatal(err)
-    }
+client, err := session.CreateSession()
+if err != nil {
+    log.Fatal(err)
+}
 ```
 
 The above initialized client should be passed on to all further calls to cloud.
 
 ```golang
-    client, err := session.CreateSession()
-	if err != nil {
-		log.Fatal(err)
-    }
+client, err := session.CreateSession()
+if err != nil {
+    log.Fatal(err)
+}
 
-    input := network.New()
-	input.Cloud.Client = client           // pass the client initialized in the previous step.
-	input.Cloud.Name = "AWS"              // select the cloud of your preference for resource creation.
-	input.Cloud.Region = "ap-south-1"     // select the region of your preference for of the cloud selected.
-	input.Cloud.GetRaw = true             // set this flag if you prefer unfiltered output, defaults to false.
-	input.NetworkID = []string{"VPC-ID"}  // ID of the network of which the information to be retrieved.
+input := network.New()
+input.Cloud.Client = client           // pass the client initialized in the previous step.
+input.Cloud.Name = "AWS"              // select the cloud of your preference for resource creation.
+input.Cloud.Region = "ap-south-1"     // select the region of your preference for of the cloud selected.
+input.Cloud.GetRaw = true             // set this flag if you prefer unfiltered output, defaults to false.
+input.NetworkID = []string{"VPC-ID"}  // ID of the network of which the information to be retrieved.
 
-    resp, err := input.GetNetworks()      // returns the details of the network selected.
-    if err != nil {
-		log.Fatal(err)
-    }
-    fmt.Printf("%v\n",resp)
+resp, err := input.GetNetworks()      // returns the details of the network selected.
+if err != nil {
+    log.Fatal(err)
+}
+fmt.Printf("%v\n",resp)
 ```
 
 ### Installation:
@@ -83,6 +83,7 @@ To update the SDK use `go get -u` to retrieve the latest version of the SDK.
 ```bash
 go get -u github.com/nikhilsbhat/neuron-cloudy
 ```
+Import to use it in code.
 ```golang
 import (
     "github.com/nikhilsbhat/neuron-cloudy"
