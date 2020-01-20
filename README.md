@@ -4,7 +4,7 @@
     <p align="center">A cloud agnistic SDK.</p>
     <p align="center">
         <a href="https://goreportcard.com/report/github.com/nikhilsbhat/neuron-cloudy"><img src="https://goreportcard.com/badge/github.com/nikhilsbhat/neuron-cloudy"></a>
-        <a href="https://github.com/nikhilsbhat/neuron-cloudy/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-APACHE%20V2-blue.svg"></a>
+        <a href="https://github.com/nikhilsbhat/neuron-cloudy/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-apache%20v2-blue.svg"></a>
         <a href="https://godoc.org/github.com/nikhilsbhat/neuron-cloudy"><img src="https://godoc.org/github.com/nikhilsbhat/neuron-cloudy?status.svg" alt="GoDoc"></a>
     </p>
 </p>
@@ -23,6 +23,24 @@ vpc,server,loadbalancer,cluster etc.
 
 * It expected that [go](https://golang.org/dl/) to be pre installed on the machine. Installing go can be found [here](https://golang.org/doc/install).
 * Understanding of basics of cloud and its components.
+
+### Installation:
+
+Use `go get` to retrieve the SDK to add it to your `GOPATH` workspace, or
+project's Go module dependencies.
+```bash
+go get github.com/nikhilsbhat/neuron-cloudy
+```
+To update the SDK use `go get -u` to retrieve the latest version of the SDK.
+```bash
+go get -u github.com/nikhilsbhat/neuron-cloudy
+```
+Import to use it in code.
+```golang
+import (
+    "github.com/nikhilsbhat/neuron-cloudy"
+)
+```
 
 ## Documentation
 
@@ -70,24 +88,6 @@ if err != nil {
     log.Fatal(err)
 }
 fmt.Printf("%v\n",resp)
-```
-
-### Installation:
-
-Use `go get` to retrieve the SDK to add it to your `GOPATH` workspace, or
-project's Go module dependencies.
-```bash
-go get github.com/nikhilsbhat/neuron-cloudy
-```
-To update the SDK use `go get -u` to retrieve the latest version of the SDK.
-```bash
-go get -u github.com/nikhilsbhat/neuron-cloudy
-```
-Import to use it in code.
-```golang
-import (
-    "github.com/nikhilsbhat/neuron-cloudy"
-)
 ```
 
 ### Go Modules
