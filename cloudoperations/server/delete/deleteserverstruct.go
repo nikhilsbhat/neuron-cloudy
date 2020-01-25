@@ -1,3 +1,5 @@
+// Package deleteserver makes the tool cloud agnostic in deletion of the created/existing servers.
+// The decision will be made here to route the request to respective package based on input.
 package deleteserver
 
 import (

@@ -1,3 +1,5 @@
+// Package getloadbalancer makes the tool cloud agnostic in retrieving the information of created/existing loadbalancers.
+// The decision will be made here to route the request to respective package based on input.
 package getloadbalancer
 
 import (

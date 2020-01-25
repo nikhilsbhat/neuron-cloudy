@@ -1,3 +1,5 @@
+// Package imagecreate makes the tool cloud agnostic for the image creation process.
+// The decision will be made here to route the request to respective package based on input.
 package imagecreate
 
 import (

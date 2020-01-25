@@ -1,3 +1,4 @@
+// Package cloudyerror has various errors which are specifec to cloudy.
 package cloudyerror
 
 import (
