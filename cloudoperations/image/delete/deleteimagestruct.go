@@ -1,3 +1,5 @@
+// Package imagedelete makes the tool cloud agnostic for the image deletion process.
+// The decision will be made here to route the request to respective package based on input.
 package imagedelete
 
 import (

@@ -1,3 +1,6 @@
+// Package neurongcp is the plain apisource of cloud GCP, consuming its function works but no abstraction.
+// Rather calling its function consider calling the functions of commoncloud which has abstraction and would help in many aspect.
+// If still consider calling plain apisource, we prefer calling cloud native SDKs rather using this.
 package neurongcp
 
 import (
