@@ -1,4 +1,4 @@
-// Package support will make a call whether this tool supports the passed cloud.
+// Package support will make a call whether this tool supports the invoked cloud.
 package support
 
 // Listing the names of the cloud that this tool supports,

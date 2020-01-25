@@ -1,3 +1,5 @@
+// Package createloadbalancer makes the tool cloud agnostic for creation of loadbalancers.
+// The decision will be made here to route the request to respective package based on input.
 package createloadbalancer
 
 import (

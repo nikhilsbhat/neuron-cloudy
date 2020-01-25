@@ -1,3 +1,5 @@
+// Package getservers makes the tool cloud agnostic in retrieving the information of the created servers.
+// The decision will be made here to route the request to respective package based on input.
 package getservers
 
 import (

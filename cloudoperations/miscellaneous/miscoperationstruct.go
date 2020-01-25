@@ -1,3 +1,5 @@
+// Package miscoperations makes the tool cloud agnostic in creation/deletion/updation/retrieval of other cloud resources.
+// The decision will be made here to route the request to respective package based on input.
 package miscoperations
 
 import (
