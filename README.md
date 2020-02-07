@@ -12,10 +12,10 @@
 ## Introduction
 
 Cloudy is a golang sdk built to interact with all the cloud with a single function call.
-This is used by [neuron](https://github.com/nikhilsbhat/neuron), which has a cli and exposes common api to
-create resources accross various cloud. As of now cloudy can talk to AWS, GCP and AZURE(Very minimal resources). Soon more features will be added and extends to various clouds.
+This is used by [neuron](https://github.com/nikhilsbhat/neuron). Through its cli and api, one can
+create resources accross various cloud. As of now cloudy helps with clouds: AWS, GCP and AZURE(Very minimal resources). Soon more features will be added and extends to various clouds.
 
-One who wants to use this, just include this as library in your line of code and start coding.
+One who wants to use this, just include this as library in your code and start coding.
 Cloudy supports __creation/deletion/updation/retrieval__ of various cloud resources including:
 vpc,server,loadbalancer,cluster etc.
 
@@ -44,16 +44,16 @@ import (
 
 ## Documentation
 
-This Cloudy rely on dependency injection for the better outcome. As part of this one has to initialize the client and pass on the client for __creation/deletion/updation/retrieval__ of the cloud resources. Below sample code explains them.
+This Cloudy rely on dependency injection for the better outcome. As part of this, one has to initialize the client and pass on the client for __creation/deletion/updation/retrieval__ of the cloud resources. Below sample code explains them.
 
-initializing content for _GCP_ client
+gathering contents for _GCP_ client
 ```golang
 session := sess.CreateGcpSessionInput {
     CredPath = "path/to/credentials.json"
 }
 ```
 
-initializing content for _AWS_ client
+gathering contents for _AWS_ client
 ```golang
 session := sess.CreateAwsSessionInput {
     KeyId = "KEY_ID_OF_AWS"
