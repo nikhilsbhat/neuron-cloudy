@@ -21,6 +21,10 @@ func (net *GetNetworksInput) GetNetworks() (GetNetworksResponse, error) {
 		return GetNetworksResponse{}, fmt.Errorf(common.DefaultCloudResponse + "GetNetworks")
 	}
 
+	if valid := support.ValidateClient(&net.Cloud); valid != true {
+		return GetNetworksResponse{}, fmt.Errorf(fmt.Sprintf(common.InvalidClientResponse, "GetNetworks"))
+	}
+
 	switch strings.ToLower(net.Cloud.Name) {
 	case "aws":
 
