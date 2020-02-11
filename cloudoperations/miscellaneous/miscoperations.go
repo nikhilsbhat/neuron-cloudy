@@ -27,6 +27,9 @@ func (reg *GetRegionInput) GetRegions() (GetRegionsResponse, error) {
 	if status := support.DoesCloudSupports(strings.ToLower(reg.Cloud.Name)); status != true {
 		return GetRegionsResponse{}, fmt.Errorf(common.DefaultCloudResponse + "GetNetworks")
 	}
+	if valid := support.ValidateClient(&reg.Cloud); valid != true {
+		return GetRegionsResponse{}, fmt.Errorf(fmt.Sprintf(common.InvalidClientResponse, "GetNetworks"))
+	}
 
 	switch strings.ToLower(reg.Cloud.Name) {
 	case "aws":
